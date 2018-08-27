@@ -1,0 +1,55 @@
+﻿@model IEnumerable<TakeAFlight.Models.Flight>
+
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Duration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Departure)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Destination.DestinationID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+	var DestinationDetails = item.Destination.ToString();
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departure)
+            </td>
+            <td>
+		
+                @Html.DisplayFor(modelItem => DestinationDetails)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FlightID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FlightID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FlightID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

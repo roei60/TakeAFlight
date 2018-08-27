@@ -37,6 +37,11 @@ namespace TakeAFlight
 			services.AddTransient<IEmailSender, EmailSender>();
 
 			services.AddMvc();
+
+		    services.AddDbContext<TakeAFlightContext>(options =>
+		            options.UseSqlServer(Configuration.GetConnectionString("TakeAFlightContext")));
+
+			
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
