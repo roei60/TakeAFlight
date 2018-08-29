@@ -31,12 +31,7 @@ namespace TakeAFlight.Controllers
 		public async Task<IActionResult> Index()
 		{
 			var takeAFlightContext = _context.Flight.Include(f => f.Destination);
-			if (User.IsInRole("Admin"))
-				{
-					return View(await takeAFlightContext.ToListAsync());
-			}
 			return View(await takeAFlightContext.ToListAsync());
-
 		}
 
 		// GET: Flights/Details/5
