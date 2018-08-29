@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TakeAFlight.Data;
 using TakeAFlight.Models;
 using TakeAFlight.Models.AccountViewModels;
 using TakeAFlight.Services;
@@ -24,19 +25,26 @@ namespace TakeAFlight.Controllers
 		private readonly SignInManager<ApplicationUser> _signInManager;
 		private readonly IEmailSender _emailSender;
 		private readonly ILogger _logger;
-
+		private readonly RoleManager<IdentityRole> _roleManager;
+		private readonly ApplicationDbContext _context;
 		public AccountController(
 			UserManager<ApplicationUser> userManager,
 			SignInManager<ApplicationUser> signInManager,
 			IEmailSender emailSender,
-			ILogger<AccountController> logger)
+			ILogger<AccountController> logger,
+			 RoleManager<IdentityRole> _role,
+			 ApplicationDbContext context)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_emailSender = emailSender;
 			_logger = logger;
+			_roleManager = _role;
+			_context = context;
+		
+			//LoadDefaultData.CreateRolesandUsers(_roleManager, _userManager);
 		}
-
+	
 		[TempData]
 		public string ErrorMessage { get; set; }
 
