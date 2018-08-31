@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 using TakeAFlight.Data;
 using TakeAFlight.Models;
 
@@ -26,12 +27,16 @@ namespace TakeAFlight.Controllers
 			_context = context;
 			_Userscontext = userContext;
 			//LoadDefaultData.LoadDefaulDestinationData(_context);
+			//LoadDefaultData.CreateRandomFlightsData(_context);
 		}
 		// GET: Flights
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(string sortExpression = "Destination", int page = 1)
 		{
 			var takeAFlightContext = _context.Flight.Include(f => f.Destination);
-			return View(await takeAFlightContext.ToListAsync());
+			var Flights = from flights in takeAFlightContext select flights;
+			int pageSize = 10;
+			var model = await PagingList.CreateAsync(Flights, pageSize, page, sortExpression, "Destination");
+			return View(model);
 		}
 
 		// GET: Flights/Details/5

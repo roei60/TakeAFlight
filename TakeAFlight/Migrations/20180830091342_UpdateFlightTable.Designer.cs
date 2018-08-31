@@ -11,9 +11,10 @@ using TakeAFlight.Models;
 namespace TakeAFlight.Migrations
 {
     [DbContext(typeof(TakeAFlightContext))]
-    partial class TakeAFlightContextModelSnapshot : ModelSnapshot
+    [Migration("20180830091342_UpdateFlightTable")]
+    partial class UpdateFlightTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -11,7 +11,7 @@ namespace TakeAFlight.Models
 		public int DestinationID { get; set; }
 		public double Price { get; set; }
 		public TimeSpan? Duration { get; set; }
-		public TimeSpan Departure { get; set; }
+		public DateTime? Departure { get; set; }
 
 		public virtual Destination Destination { get; set; }
 	}

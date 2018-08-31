@@ -16,7 +16,7 @@ namespace TakeAFlight.Data
 	/// mainly from json
 	/// </summary>
 	public static class LoadDefaultData
-	{ 
+	{
 		public static void LoadDefaulDestinationData(TakeAFlightContext context)
 		{
 			var Folder = Directory.GetCurrentDirectory();
@@ -60,6 +60,31 @@ namespace TakeAFlight.Data
 			}
 
 		}
+		public static  void CreateRandomFlightsData(TakeAFlightContext context)
+		{
+			Random rnd = new Random();
+			List<Destination> destinationsList = context.Destinations.ToList();
+			for (int i = 0; i < 200; i++)
+			{
+				int randomIndex = rnd.Next(0, destinationsList.Count);
+				Destination selectedDest = destinationsList[randomIndex];
+				//									year,  month,       day,  hour,     min,      sec
+			 	DateTime deparuteData = new DateTime(2019, i % 12+1, i % 28+1, i % 23+1, i % 12 * 5, 0);
+				TimeSpan durationTime = new TimeSpan(i % 5+1, i % 12 * 5, 0);
+				double price = rnd.Next(500, 2000);
+				Flight tempFlight = new Flight()
+				{
+					DestinationID = selectedDest.DestinationID,
+					Departure = deparuteData,
+					Duration = durationTime,
+					Price = price,
+					Destination = selectedDest
+				};
+				 context.Flight.Add(tempFlight);
+
+			}
+			 context.SaveChanges();
+		}
 	}
-	
+
 }
