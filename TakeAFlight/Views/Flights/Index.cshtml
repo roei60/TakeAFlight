@@ -17,7 +17,7 @@
 	<thead>
 		<tr>
 			<th>
-				@Html.SortableHeaderFor(model=>model.Destination)
+				@Html.SortableHeaderFor(model => model.Destination)
 			</th>
 			<th>
 				@Html.SortableHeaderFor(model => model.Departure)
@@ -51,6 +51,10 @@
 				@if (User.IsInRole("Admin"))
 				{
 					<td>
+
+						<a id="AddToCartLink" asp-action="AddToCart" asp-route-id="@item.FlightID">
+							<span class="glyphicon glyphicon-shopping-cart"></span>
+						</a>|
 						<a asp-action="Edit" asp-route-id="@item.FlightID">Edit</a> |
 						<a asp-action="Details" asp-route-id="@item.FlightID">Details</a> |
 						<a asp-action="Delete" asp-route-id="@item.FlightID">Delete</a>
@@ -61,4 +65,4 @@
 	</tbody>
 </table>
 <br />
-	<vc:pager paging-list="@Model" />
+<vc:pager paging-list="@Model" />
