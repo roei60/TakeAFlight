@@ -29,6 +29,15 @@ namespace TakeAFlight.Controllers
 			//LoadDefaultData.LoadDefaulDestinationData(_context);
 			//LoadDefaultData.CreateRandomFlightsData(_context);
 		}
+		[HttpPost]
+		public async Task<JsonResult> AddToCart(int? FlightId)
+		{
+
+			Flight RequestedFlight;
+			RequestedFlight = await _context.Flight.Include(f=>f.Destination).SingleOrDefaultAsync(flight => flight.FlightID == FlightId);
+			return new JsonResult(RequestedFlight);
+
+		}
 		// GET: Flights
 		public async Task<IActionResult> Index(string sortExpression = "Destination", int page = 1)
 		{
