@@ -16,6 +16,8 @@ namespace TakeAFlight.Models
 
 
 		}
+
+		public DbSet<FlightOrder> FlightOrders { get; set; }
 		public DbSet<Passenger> Passengers { get; set; }
 		public DbSet<TakeAFlight.Models.Destination> Destinations { get; set; }
 		public DbSet<TakeAFlight.Models.Flight> Flight { get; set; }
