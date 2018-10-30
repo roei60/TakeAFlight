@@ -15,6 +15,7 @@ using TakeAFlight.Data;
 using TakeAFlight.Models;
 using TakeAFlight.Models.ManageViewModels;
 using TakeAFlight.Services;
+using ReflectionIT.Mvc.Paging;
 
 namespace TakeAFlight.Controllers
 {
@@ -528,6 +529,124 @@ namespace TakeAFlight.Controllers
 
 			return View(nameof(ShowRecoveryCodes), model);
 		}
+
+
+		#region Destination
+
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> ViewDestinations(string sortExpression = "Country", int page = 1)
+		{
+			var Dest =  from dest in _takeAFlightContext.Destinations
+					   select dest;
+			int pageSize = 10;
+			var model = await PagingList.CreateAsync(Dest, pageSize, page, sortExpression, "Country");
+			model.Action = "ViewDestinations";
+
+			return View(model);
+		}
+		[Authorize(Roles = "Admin")]
+		public IActionResult CreateDestination()
+		{
+			return View();
+		}
+		[Authorize(Roles = "Admin")]
+
+		public async Task<IActionResult> DeleteDestination(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var destination = await _takeAFlightContext.Destinations.SingleOrDefaultAsync(m => m.DestinationID== id);
+			if (destination== null)
+			{
+				return NotFound();
+			}
+
+			return View(destination);
+		}
+
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteDestinationConfirmed(int DestinationID)
+		{
+			var destination = await _takeAFlightContext.Destinations.SingleOrDefaultAsync(m => m.DestinationID== DestinationID);
+			if (destination != null)
+			{
+				_takeAFlightContext.Destinations.Remove(destination);
+				await _takeAFlightContext.SaveChangesAsync();
+			}
+			return RedirectToAction(nameof(ViewDestinations));
+		}
+
+		// POST: Flights/Create
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> CreateDestination([Bind("DestinationID,Country,City")] Destination destination)
+		{
+			if (ModelState.IsValid)
+			{
+				_takeAFlightContext.Add(destination);
+				await _takeAFlightContext.SaveChangesAsync();
+				return RedirectToAction(nameof(ViewDestinations));
+			}
+			return View(destination);
+		}
+
+
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> EditDestination(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var destination= await _takeAFlightContext.Destinations.SingleOrDefaultAsync(m => m.DestinationID == id);
+			if (destination == null)
+			{
+				return NotFound();
+			}
+			return View(destination);
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(int DestinationID, [Bind("DestinationID,Country,City")] Destination destination)
+		{
+			if (DestinationID != destination.DestinationID)
+			{
+				return NotFound();
+			}
+
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					_takeAFlightContext.Update(destination);
+					await _takeAFlightContext.SaveChangesAsync();
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					if (!_takeAFlightContext.Destinations.Any(obj=>obj.DestinationID==DestinationID))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
+				}
+				return RedirectToAction(nameof(ViewDestinations));
+			}
+			return View(destination);
+		}
+		#endregion
 
 		#region Helpers
 
