@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TakeAFlight.Data;
 using TakeAFlight.Models;
 using TakeAFlight.Models.ManageViewModels;
 using TakeAFlight.Services;
@@ -25,7 +27,7 @@ namespace TakeAFlight.Controllers
 		private readonly IEmailSender _emailSender;
 		private readonly ILogger _logger;
 		private readonly UrlEncoder _urlEncoder;
-
+		private readonly TakeAFlightContext _takeAFlightContext;
 		private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 		private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
 
@@ -34,13 +36,23 @@ namespace TakeAFlight.Controllers
 		  SignInManager<ApplicationUser> signInManager,
 		  IEmailSender emailSender,
 		  ILogger<ManageController> logger,
-		  UrlEncoder urlEncoder)
+		  UrlEncoder urlEncoder, TakeAFlightContext dbContext)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_emailSender = emailSender;
 			_logger = logger;
 			_urlEncoder = urlEncoder;
+			_takeAFlightContext = dbContext;
+		}
+
+		private void SetListData()
+		{
+			Sex gender = new Sex();
+			Nationality nationality = new Nationality();
+			ViewBag.NationalityList = nationality.ToSelectList();
+			ViewBag.SexList = gender.ToSelectList();
+
 		}
 
 		[TempData]
@@ -49,19 +61,26 @@ namespace TakeAFlight.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
+			SetListData();
 			var user = await _userManager.GetUserAsync(User);
 			if (user == null)
 			{
 				throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
 			}
+			var passenger = _takeAFlightContext.Passengers.Include(p => p.User).SingleOrDefault(u => u.ApplicationUserID == user.Id);
+			//if (passenger == null)
+			//{
+			//	return NotFound();
+			//}
 
 			var model = new IndexViewModel
 			{
 				Username = user.UserName,
 				Email = user.Email,
-				PhoneNumber = user.PhoneNumber,
+				//PhoneNumber = user.PhoneNumber,
 				IsEmailConfirmed = user.EmailConfirmed,
-				StatusMessage = StatusMessage
+				StatusMessage = StatusMessage,
+				Passenger = passenger
 			};
 
 			return View(model);
@@ -71,6 +90,8 @@ namespace TakeAFlight.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Index(IndexViewModel model)
 		{
+			SetListData();
+
 			if (!ModelState.IsValid)
 			{
 				return View(model);
@@ -91,16 +112,33 @@ namespace TakeAFlight.Controllers
 					throw new ApplicationException($"Unexpected error occurred setting email for user with ID '{user.Id}'.");
 				}
 			}
-
-			var phoneNumber = user.PhoneNumber;
-			if (model.PhoneNumber != phoneNumber)
+			var Passenger = _takeAFlightContext.Passengers.Include(u=>u.User).FirstOrDefault(obj => obj.ApplicationUserID == user.Id);
+		
+			if(Passenger!=null)
 			{
-				var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
-				if (!setPhoneResult.Succeeded)
-				{
-					throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
-				}
+				model.Passenger.ApplicationUserID = Passenger.ApplicationUserID;
+				model.Passenger.User = Passenger.User;
+				model.Passenger.ID = Passenger.ID;
+				_takeAFlightContext.Entry(Passenger).State = EntityState.Detached;
+				_takeAFlightContext.Update(model.Passenger);
+				await _takeAFlightContext.SaveChangesAsync();
 			}
+			else
+			{
+				StatusMessage = "Error: Cannot find passenger data... pls try again later ";
+				return RedirectToAction(nameof(Index));
+
+			}
+
+			//var phoneNumber = user.PhoneNumber;
+			//if (model.PhoneNumber != phoneNumber)
+			//{
+			//	var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
+			//	if (!setPhoneResult.Succeeded)
+			//	{
+			//		throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+			//	}
+			//}
 
 			StatusMessage = "Your profile has been updated";
 			return RedirectToAction(nameof(Index));

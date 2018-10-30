@@ -29,8 +29,8 @@ namespace TakeAFlight.Data
 		}
 
 		//Creating Admin Role to handle admin options like edit and delete a flight for example.
-		public static  async void CreateRolesandUsers(RoleManager<IdentityRole> roleManager,
-			UserManager<ApplicationUser> userManager)
+		public static async Task CreateRolesandUsers(RoleManager<IdentityRole> roleManager,
+			UserManager<ApplicationUser> userManager,TakeAFlightContext takeAFlight)
 		{
 
 			bool isRoleExist = await roleManager.RoleExistsAsync("Admin");
@@ -57,6 +57,20 @@ namespace TakeAFlight.Data
 				{
 					var result1 = await userManager.AddToRoleAsync(user, "Admin");
 				}
+
+				var passenger = new Passenger
+				{
+					FirstName = "roei",
+					ApplicationUserID = user.Id,
+					DateOfBirth = new DateTime(),
+					Gender = Sex.Man,
+					IdPassenger = 123456789,
+					LastName = "bbb",
+					Nationality = Nationality.Europe,
+					User=user
+				};
+				await takeAFlight.AddAsync(passenger);
+				await takeAFlight.SaveChangesAsync();
 			}
 
 		}
