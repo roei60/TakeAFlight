@@ -36,6 +36,16 @@ class CartManager {
 
     }
 
+    SendDataToViewCart(e) {
+        var flightsIdArray = []
+     
+        Object.keys(Cart.items).forEach(function (key) {
+            flightsIdArray.push(parseInt(key));
+        });
+
+        $.post('/ViewCart/Index', $.param({ data: flightsIdArray }, true), function (data) { });
+    }
+
     UpdateCartSize() {
         
       $("#CartLength").html(" "+Cart.Count+" - Items")

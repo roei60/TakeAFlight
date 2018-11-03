@@ -31,6 +31,12 @@ if ($(document).ready(function () {
         event.stopPropagation();
     });
 
+    $("#ViewCart").on("click", function (e) {
+        //event.stopPropagation();
+        cart.SendDataToViewCart(e);
+
+    });
+
     LoadCartData();
 
 }));

@@ -1,0 +1,98 @@
+﻿
+@model ReflectionIT.Mvc.Paging.PagingList<TakeAFlight.Models.Flight>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Show Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View Cart</h2>
+
+<script type="text/javascript">
+    function add_new_passenger(flightId) {
+        var tempItem = $(".passenger_data").first().clone();
+        tempItem.find("#first_name").text("");
+        tempItem.find("#last_name").text("");
+        tempItem.find("#passport_id").text("");
+        tempItem.removeClass(".passenger_data");
+        $("#passengers_list_" + flightId).append(tempItem);
+    }
+
+    function remove_passenger(e) {
+        e.parentNode.parentNode.removeChild(e.parentNode);
+    }
+</script>
+
+
+@if (Model != null)
+{
+    @foreach (var item in Model)
+    {
+        var DestinationDetails = item.Destination.ToString();
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FlightID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Destination)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Departure)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Duration)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FlightID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => DestinationDetails)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Departure)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        <button class="add_passenger" id="@item.FlightID" onclick="add_new_passenger(this.id)">Add Passenger</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul class="passengers_list" id="passengers_list_@item.FlightID">
+            <li>
+                First name:
+                <input type="text" id="first_name"/>
+                Last name:
+                <input type="text" id="last_name"/>
+                Passport ID:
+                <input type="text" id="passport_id"/>
+            </li>
+            <li class="passenger_data">
+                First name:
+                <input type="text" id="first_name" />
+                Last name:
+                <input type="text" id="last_name" />
+                Passport ID:
+                <input type="text" id="passport_id" />
+                <button class="btn btn-xs btn-danger" onclick="remove_passenger(this)">x</button>
+            </li>
+        </ul>
+    }
+}
