@@ -1,0 +1,48 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<TakeAFlight.Models.Destination>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+	ViewData["Title"] = "Destinations";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData.AddActivePage(ManageNavPages.viewDestinations);
+
+}
+<h2>Index</h2>
+
+
+<p>
+	<a asp-action="CreateDestination">Create New</a>
+</p>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.SortableHeaderFor(model => model.Country)
+			</th>
+			<th>
+				@Html.SortableHeaderFor(model => model.City)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Country)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.City)
+				</td>
+				<td>
+					<a asp-action="EditDestination" asp-route-id="@item.DestinationID">Edit</a> |
+					<a asp-action="DeleteDestination" asp-route-id="@item.DestinationID">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+<br />
+<vc:pager paging-list="@Model" />

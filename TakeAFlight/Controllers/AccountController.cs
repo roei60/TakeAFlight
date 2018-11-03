@@ -26,25 +26,27 @@ namespace TakeAFlight.Controllers
 		private readonly IEmailSender _emailSender;
 		private readonly ILogger _logger;
 		private readonly RoleManager<IdentityRole> _roleManager;
-		private readonly ApplicationDbContext _context;
+		private readonly ApplicationDbContext _Usercontext;
+		private readonly TakeAFlightContext _DbContext;
 		public AccountController(
 			UserManager<ApplicationUser> userManager,
 			SignInManager<ApplicationUser> signInManager,
 			IEmailSender emailSender,
 			ILogger<AccountController> logger,
 			 RoleManager<IdentityRole> _role,
-			 ApplicationDbContext context)
+			 ApplicationDbContext userContext,
+			 TakeAFlightContext dbContext)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_emailSender = emailSender;
 			_logger = logger;
 			_roleManager = _role;
-			_context = context;
-		
-			//LoadDefaultData.CreateRolesandUsers(_roleManager, _userManager);
+			_Usercontext = userContext;
+			_DbContext = dbContext;
+			//LoadDefaultData.CreateRolesandUsers(_roleManager, _userManager, dbContext);
 		}
-	
+
 		[TempData]
 		public string ErrorMessage { get; set; }
 
@@ -211,12 +213,20 @@ namespace TakeAFlight.Controllers
 		{
 			return View();
 		}
+		private void SetRegisterListData()
+		{
+			Sex gender = new Sex();
+			Nationality nationality = new Nationality();
+			ViewBag.NationalityList = nationality.ToSelectList();
+			ViewBag.SexList = gender.ToSelectList();
 
+		}
 		[HttpGet]
 		[AllowAnonymous]
 		public IActionResult Register(string returnUrl = null)
 		{
 			ViewData["ReturnUrl"] = returnUrl;
+			SetRegisterListData();
 			return View();
 		}
 
@@ -225,26 +235,47 @@ namespace TakeAFlight.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
 		{
-			ViewData["ReturnUrl"] = returnUrl;
-			if (ModelState.IsValid)
+			try
 			{
-				var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-				var result = await _userManager.CreateAsync(user, model.Password);
-				if (result.Succeeded)
+				ViewData["ReturnUrl"] = returnUrl;
+				SetRegisterListData();
+				bool isAlreadyExistPassenger = _DbContext.Passengers.FirstOrDefault(obj => obj.IdPassenger == model.Passenger.IdPassenger) != null;
+
+				if (ModelState.IsValid && !isAlreadyExistPassenger)
 				{
-					_logger.LogInformation("User created a new account with password.");
 
-					var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-					var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-					await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+					var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+					var result = await _userManager.CreateAsync(user, model.Password);
+					if (result.Succeeded)
+					{
+						_logger.LogInformation("User created a new account with password.");
 
-					await _signInManager.SignInAsync(user, isPersistent: false);
-					_logger.LogInformation("User created a new account with password.");
-					return RedirectToLocal(returnUrl);
+						var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+						var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+						await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+						await _signInManager.SignInAsync(user, isPersistent: false);
+						_logger.LogInformation("User created a new account with password.");
+						#region Creating passenger and Attach him the new user data
+
+						var passenger = model.Passenger;
+						passenger.User = user;
+						passenger.ApplicationUserID = user.Id;
+						_DbContext.Passengers.Add(passenger);
+						await _DbContext.SaveChangesAsync();
+						#endregion
+						return RedirectToLocal(returnUrl);
+					}
+
+					AddErrors(result);
 				}
-				AddErrors(result);
+				else if (isAlreadyExistPassenger)
+					ModelState.AddModelError(string.Empty, "Passenger is already exist");
 			}
-
+			catch
+			{
+				ModelState.AddModelError(string.Empty, "Opps... something went wrong... pls try again later!");
+			}
 			// If we got this far, something failed, redisplay form
 			return View(model);
 		}

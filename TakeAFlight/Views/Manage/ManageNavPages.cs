@@ -16,11 +16,11 @@ namespace TakeAFlight.Views.Manage
 		public static string ChangePassword => "ChangePassword";
 
 		public static string ExternalLogins => "ExternalLogins";
-
+		public static string viewDestinations => "Destinations";
 		public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
 		public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
-
+		public static string ViewDestinations(ViewContext viewContext) => PageNavClass(viewContext, viewDestinations);
 		public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
 
 		public static string ExternalLoginsNavClass(ViewContext viewContext) => PageNavClass(viewContext, ExternalLogins);

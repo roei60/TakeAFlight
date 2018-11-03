@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TakeAFlight.Models;
 
 namespace TakeAFlight.Migrations
 {
     [DbContext(typeof(TakeAFlightContext))]
-    partial class TakeAFlightContextModelSnapshot : ModelSnapshot
+    [Migration("20181024185335_UpdatePassengerDb")]
+    partial class UpdatePassengerDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
