@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using TakeAFlight.Models.ML;
 
 namespace TakeAFlight
 {
@@ -14,8 +15,10 @@ namespace TakeAFlight
 	{
 		public static void Main(string[] args)
 		{
-			BuildWebHost(args).Run();
-		}
+            DestinationPredictionManager.Instance.Train();
+            BuildWebHost(args).Run();
+
+        }
 
 		public static IWebHost BuildWebHost(string[] args) =>
 			WebHost.CreateDefaultBuilder(args)
