@@ -16,15 +16,13 @@
                 <div class="row-padding" style="margin:0 -16px;">
                     <div class="half margin-bottom">
                         <label>Travel the world with us</label>
-                        <div class=" col-md-4">
-                            <select asp-for="Destination" class="form-control col-md-1" asp-items="ViewBag.Items" name="SearchFlights"></select>
-                            <span asp-validation-for="Destination" class="text-danger"></span>
-                        </div>
+                        <select asp-for="Destination" class="b" asp-items="ViewBag.Items" name="SearchFlights"></select>
+                        <span asp-validation-for="Destination" class="a"></span>
                     </div>
                 </div>
                 <div class="half">
-                    <label>Departure:</label>
-                    <input type="date" name="Departure" />
+                    <label>Departure:  </label>
+                    <input type="date" name="Departure" value="2019-01-08"/>
                 </div>
 
                 <div>
@@ -148,13 +146,12 @@
 <!-- Video  -->
 <div class="container ">
     <div class="panel padding-16 card ">
-        <h2>The 10 Cheapest Tourist Destinations In Europe</h2>
-        <video id="video1" controls="controls" autoplay style="width:100%; height: 315px;">
-            <source src="~/video/DestinationsInEurope.mp4" type="video/mp4" />
+        <h2>Top 10 Best Cities to Visit in Europe</h2>
+        <video id="video1" controls="controls" autoplay style="width:100%;">
+            <source src="~/video/videoplayback.mp4" type="video/mp4" />
         </video>
     </div>
 </div>
-
 
 <!-- Newsletter -->
 <div class="container">
