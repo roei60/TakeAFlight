@@ -8,6 +8,9 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Rosario" />
+        <link rel="icon" href="~/images/globe.png"/>
+        <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Syncopate' type='text/css' />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -23,9 +26,10 @@
             integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
     </script>
 </head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+<body class="light-grey">
+    <!--Navigation Bar-->
+    <nav class="bar white large">
+        <div>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -81,7 +85,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - TakeAFlight</p>
+            <p>&copy; 2018 - TakeAFlight powered by: Esti, Roi, Tzahi, Valery</p>
         </footer>
     </div>
 

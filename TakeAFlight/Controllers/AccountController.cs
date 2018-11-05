@@ -44,7 +44,7 @@ namespace TakeAFlight.Controllers
 			_roleManager = _role;
 			_Usercontext = userContext;
 			_DbContext = dbContext;
-			//LoadDefaultData.CreateRolesandUsers(_roleManager, _userManager, dbContext);
+			//await LoadDefaultData.CreateRolesandUsers(_roleManager, _userManager, dbContext);
 		}
 
 		[TempData]

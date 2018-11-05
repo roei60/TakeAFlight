@@ -1,7 +1,13 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: fantasy,Syncopate;
 }
+
+h2 {
+    text-shadow: 1px 1px #333;
+}
+
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
@@ -45,7 +51,7 @@ html {
 body {
     font-size: 15px;
     line-height: 1.5;
-    font-family: sans-serif;
+    font-family: fantasy,Syncopate;
     margin: 0;
 }
 
@@ -80,7 +86,7 @@ body {
     background-color: inherit;
     text-align: center;
     cursor: pointer;
-    white-space: nowrap
+    white-space: nowrap;
 }
 
     .button:hover {
@@ -109,7 +115,7 @@ body {
     font-size: 1em;
     white-space: normal;
     padding: 8px;
-    font-family: fantasy;
+    font-family: fantasy,Syncopate;
     text-align: left;
 }
 
@@ -131,6 +137,7 @@ body {
     background-color: #61596E;
     box-sizing: border-box;
     border-right: 2px #fff solid;
+    transition: height 2s linear;
 }
 
 .navColor, .w3-hover-red:hover {
