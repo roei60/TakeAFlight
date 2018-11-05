@@ -5,17 +5,18 @@
 }
 
 <ul class="nav nav-pills nav-stacked">
-	<li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index">Profile</a></li>
-	<li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Password</a></li>
-	@if (User.IsInRole("Admin"))
-	{
-		<li class="@ManageNavPages.ViewDestinations(ViewContext)"><a asp-action="ViewDestinations">Destinations</a></li>
+    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index">Profile</a></li>
+    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Password</a></li>
+    <li class="@ManageNavPages.MyOrdersNavClass(ViewContext)"><a asp-action="MyOrders">My Orders</a></li>
+    @if (User.IsInRole("Admin"))
+    {
+        <li class="@ManageNavPages.ViewDestinations(ViewContext)"><a asp-action="ViewDestinations">Destinations</a></li>
 
-	}
-	@*@if (hasExternalLogins)
-		{
-			<li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ExternalLogins">External logins</a></li>
-		}*@
-	@*<li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-action="TwoFactorAuthentication">Two-factor authentication</a></li>*@
+    }
+    @*@if (hasExternalLogins)
+        {
+            <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ExternalLogins">External logins</a></li>
+        }*@
+    @*<li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-action="TwoFactorAuthentication">Two-factor authentication</a></li>*@
 </ul>
 

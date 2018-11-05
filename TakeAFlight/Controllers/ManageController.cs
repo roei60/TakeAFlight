@@ -531,10 +531,33 @@ namespace TakeAFlight.Controllers
 			return View(nameof(ShowRecoveryCodes), model);
 		}
 
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> MyOrders()
+        {
+            var tupleList = new List<Tuple<int, string, string, double, int>> { };
 
-		#region Destination
+            var user = await _userManager.GetUserAsync(User);
+            var passanger = _takeAFlightContext.Passengers.FirstOrDefault(obj => obj.ApplicationUserID == user.Id);
 
-		[Authorize(Roles = "Admin")]
+            var orders = await _takeAFlightContext.FlightOrders.Where(f => f.PassengerID == passanger.ID).ToListAsync();
+
+            foreach(FlightOrder o in orders)
+            {
+                var flight = _takeAFlightContext.Flight.SingleOrDefault(f => f.FlightID == o.FlightID);
+                var dest = _takeAFlightContext.Destinations.SingleOrDefault(d => d.DestinationID == flight.DestinationID);
+
+                tupleList.Add(Tuple.Create(flight.FlightID, dest.ToString(), flight.Duration.ToString(), flight.Price, o.Quantity));
+            }
+
+            ViewData["Message"] = tupleList;
+            return View(orders);
+        }
+
+
+        #region Destination
+
+        [Authorize(Roles = "Admin")]
 		public async Task<IActionResult> ViewDestinations(string sortExpression = "Country", int page = 1, string filter = "")
 		{
 			var Dest = from dest in _takeAFlightContext.Destinations

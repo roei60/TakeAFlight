@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "My Orders";
+    ViewData.AddActivePage(ManageNavPages.MyOrders);
+
+    var message = (List<Tuple<int, string, string, double, int>>)ViewData["Message"];
+}
+
+<h4>My Orders</h4>
+
+@if (Model != null)
+{
+    <Table class="table">
+        <thead>
+            <tr>
+                <th>Flight ID</th>
+                <th>Destination</th>
+                <th>Duration</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Tuple<int, string, string, double, int> t in message)
+            {
+                <tr>
+                    <td>@t.Item1</td>
+                    <td>@t.Item2</td>
+                    <td>@t.Item3</td>
+                    <td>@t.Item4</td>
+                    <td>@t.Item5</td>
+                </tr>
+            }
+        </tbody>
+    </Table>
+}
