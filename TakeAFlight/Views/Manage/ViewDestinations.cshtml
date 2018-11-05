@@ -7,13 +7,19 @@
 	ViewData.AddActivePage(ManageNavPages.viewDestinations);
 
 }
-<h2>Index</h2>
-
+<h2>Our Destinations</h2>
 
 <p>
 	<a asp-action="CreateDestination">Create New</a>
 </p>
 
+<form method="get" class="form-inline">
+	<input name="filter" class="form-control" placeholder="Search by country or city"
+		   value="@Model.RouteValue["Filter"]" />
+	<button type="submit" class="btn btn-info">
+		<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+	</button>
+</form>
 <table class="table">
 	<thead>
 		<tr>
