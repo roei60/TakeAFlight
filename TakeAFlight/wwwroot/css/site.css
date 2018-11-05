@@ -26,6 +26,10 @@
     margin: 15px;
 }
 
+.passengers_list .form-control {
+    width: 200px;
+}
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */
@@ -33,3 +37,4 @@
         display: none;
     }
 }
+

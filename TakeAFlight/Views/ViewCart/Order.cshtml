@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var message = (List<Tuple<string, string, int>>)ViewData["Message"];
+}
+
+<h2>Order</h2>
+
+
+@{
+    if (message.Count > 0)
+    {
+        <h3>Order Was Successful!</h3>
+        <br />
+        <Table class="table">
+            <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>Departure</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            @foreach (Tuple<string, string, int> t in message)
+            {
+                <tr>
+                    <td>@t.Item1</td>
+                    <td>@t.Item2</td>
+                    <td>@t.Item3</td>
+                </tr>
+            }
+        </Table>
+
+        @*<a class="twitter-share-button"
+               href="https://twitter.com/intent/tweet"
+               data-size="large"
+               data-text="TakeAFlight is the best"
+               data-url="https://dev.twitter.com/web/tweet-button"
+               data-hashtags="TakeAFlight">
+                Tweet
+        </a>*@
+    }
+    else
+    {
+        <h3>Error in the order!</h3>
+    }
+}

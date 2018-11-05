@@ -29,7 +29,9 @@ namespace TakeAFlight.Controllers
 			//LoadDefaultData.LoadDefaulDestinationData(_context);
 			//LoadDefaultData.CreateRandomFlightsData(_context);
 		}
-		[HttpPost]
+
+        [Authorize]
+        [HttpPost]
 		public async Task<JsonResult> AddToCart(int? FlightId)
 		{
 
@@ -38,8 +40,9 @@ namespace TakeAFlight.Controllers
 			return new JsonResult(RequestedFlight);
 
 		}
-		// GET: Flights
-		public async Task<IActionResult> Index(string sortExpression = "Destination", int page = 1)
+        [Authorize]
+        // GET: Flights
+        public async Task<IActionResult> Index(string sortExpression = "Destination", int page = 1)
 		{
 			var takeAFlightContext = _context.Flight.Include(f => f.Destination);
 			var Flights = from flights in takeAFlightContext select flights;
@@ -48,8 +51,9 @@ namespace TakeAFlight.Controllers
 			return View(model);
 		}
 
-		// GET: Flights/Details/5
-		public async Task<IActionResult> Details(int? id)
+        // GET: Flights/Details/5
+        [Authorize]
+        public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)
 			{

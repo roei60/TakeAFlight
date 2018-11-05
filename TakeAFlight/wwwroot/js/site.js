@@ -37,6 +37,14 @@ if ($(document).ready(function () {
 
     });
 
+    $("#order_btn").on("click", function (e) {
+        cart.ClearCart(e);
+    });
+
+    $("#log_out_btn").on("click", function (e) {
+        cart.ClearCart(e);
+    });
+    
     LoadCartData();
 
 }));

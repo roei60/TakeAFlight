@@ -36,6 +36,15 @@ class CartManager {
 
     }
 
+    ClearCart(e) {
+        for (var item in Cart.items) {
+            delete (Cart.items[item]);
+        }
+        Cart.Count = 0;
+        localStorage.setItem("Cart", JSON.stringify(Cart));
+        this.UpdateCartSize();
+    }
+
     SendDataToViewCart(e) {
         var flightsIdArray = []
      

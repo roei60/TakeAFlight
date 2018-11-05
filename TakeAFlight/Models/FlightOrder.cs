@@ -11,9 +11,9 @@ namespace TakeAFlight.Models
 		public int FlightID { get; set; }
 
 		public int PassengerID { get; set; }
-	
-		public string TicketNumber { get; set; }
 
+        public int Quantity { get; set; }
+	
 		public Passenger Passenger { get; set; }
 		public Flight Flight { get; set; }
 
