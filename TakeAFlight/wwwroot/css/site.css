@@ -1,7 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    font-family: fantasy,Syncopate;
+    font-family: cursive,fantasy,Syncopate;
 }
 
 h2 {
@@ -51,7 +51,7 @@ html {
 body {
     font-size: 15px;
     line-height: 1.5;
-    font-family: fantasy,Syncopate;
+    font-family: cursive, fantasy, Syncopate;
     margin: 0;
 }
 
@@ -115,7 +115,7 @@ body {
     font-size: 1em;
     white-space: normal;
     padding: 8px;
-    font-family: fantasy,Syncopate;
+    font-family: cursive,fantasy,Syncopate;
     text-align: left;
 }
 
