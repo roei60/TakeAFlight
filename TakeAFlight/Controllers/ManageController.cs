@@ -16,6 +16,7 @@ using TakeAFlight.Models;
 using TakeAFlight.Models.ManageViewModels;
 using TakeAFlight.Services;
 using ReflectionIT.Mvc.Paging;
+using Microsoft.AspNetCore.Routing;
 
 namespace TakeAFlight.Controllers
 {
@@ -114,7 +115,7 @@ namespace TakeAFlight.Controllers
 				}
 			}
 			var Passenger = _takeAFlightContext.Passengers.Include(u=>u.User).FirstOrDefault(obj => obj.ApplicationUserID == user.Id);
-		
+
 			if(Passenger!=null)
 			{
 				model.Passenger.ApplicationUserID = Passenger.ApplicationUserID;
@@ -534,14 +535,20 @@ namespace TakeAFlight.Controllers
 		#region Destination
 
 		[Authorize(Roles = "Admin")]
-		public async Task<IActionResult> ViewDestinations(string sortExpression = "Country", int page = 1)
+		public async Task<IActionResult> ViewDestinations(string sortExpression = "Country", int page = 1, string filter = "")
 		{
-			var Dest =  from dest in _takeAFlightContext.Destinations
+			var Dest = from dest in _takeAFlightContext.Destinations
 					   select dest;
 			int pageSize = 10;
+			if (!string.IsNullOrWhiteSpace(filter))
+			{
+				Dest = Dest.Where(p => p.Country.Contains(filter) || p.City.Contains(filter));
+			}
+
 			var model = await PagingList.CreateAsync(Dest, pageSize, page, sortExpression, "Country");
 			model.Action = "ViewDestinations";
 
+			model.RouteValue = new RouteValueDictionary { { "filter", filter } };
 			return View(model);
 		}
 		[Authorize(Roles = "Admin")]

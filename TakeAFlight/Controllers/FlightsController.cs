@@ -29,9 +29,7 @@ namespace TakeAFlight.Controllers
 			//LoadDefaultData.LoadDefaulDestinationData(_context);
 			//LoadDefaultData.CreateRandomFlightsData(_context);
 		}
-
-        [Authorize]
-        [HttpPost]
+		[HttpPost]
 		public async Task<JsonResult> AddToCart(int? FlightId)
 		{
 
@@ -40,19 +38,24 @@ namespace TakeAFlight.Controllers
 			return new JsonResult(RequestedFlight);
 
 		}
-        [Authorize]
         // GET: Flights
-        public async Task<IActionResult> Index(string sortExpression = "Destination", int page = 1)
-		{
-			var takeAFlightContext = _context.Flight.Include(f => f.Destination);
-			var Flights = from flights in takeAFlightContext select flights;
-			int pageSize = 10;
-			var model = await PagingList.CreateAsync(Flights, pageSize, page, sortExpression, "Destination");
-			return View(model);
-		}
+        public async Task<IActionResult> Index(DateTime Departure, string SearchFlights = "1", string sortExpression = "Destination", int page = 1, float Price = float.MaxValue)
+        {
+            var takeAFlightContext = _context.Flight.Include(f => f.Destination);
+            var Flights = from flights in takeAFlightContext select flights;
+
+            Flights = Flights.Where(obj => obj.Price <= Price && obj.Departure > Departure && obj.Destination.DestinationID == (int.Parse(SearchFlights)));
+
+
+
+
+            int pageSize = 10;
+            var model = await PagingList.CreateAsync(Flights, pageSize, page, sortExpression, "Destination");
+            model.RouteValue = new Microsoft.AspNetCore.Routing.RouteValueDictionary { { "SearchFlights", SearchFlights }, { "Price", Price }, { "Departure", Departure } };
+            return View(model);
+        }
 
         // GET: Flights/Details/5
-        [Authorize]
         public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)
