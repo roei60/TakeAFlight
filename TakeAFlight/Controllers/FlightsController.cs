@@ -29,7 +29,9 @@ namespace TakeAFlight.Controllers
 			//LoadDefaultData.LoadDefaulDestinationData(_context);
 			//LoadDefaultData.CreateRandomFlightsData(_context);
 		}
-		[HttpPost]
+
+        [Authorize]
+        [HttpPost]
 		public async Task<JsonResult> AddToCart(int? FlightId)
 		{
 
@@ -38,16 +40,15 @@ namespace TakeAFlight.Controllers
 			return new JsonResult(RequestedFlight);
 
 		}
+
         // GET: Flights
+        [Authorize]
         public async Task<IActionResult> Index(DateTime Departure, string SearchFlights = "1", string sortExpression = "Destination", int page = 1, float Price = float.MaxValue)
         {
             var takeAFlightContext = _context.Flight.Include(f => f.Destination);
             var Flights = from flights in takeAFlightContext select flights;
 
             Flights = Flights.Where(obj => obj.Price <= Price && obj.Departure > Departure && obj.Destination.DestinationID == (int.Parse(SearchFlights)));
-
-
-
 
             int pageSize = 10;
             var model = await PagingList.CreateAsync(Flights, pageSize, page, sortExpression, "Destination");
@@ -56,6 +57,7 @@ namespace TakeAFlight.Controllers
         }
 
         // GET: Flights/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)
@@ -134,7 +136,8 @@ namespace TakeAFlight.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("FlightID,DestinationID,Price,Duration,Departure")] Flight flight)
+        [Authorize]
+        public async Task<IActionResult> Edit(int id, [Bind("FlightID,DestinationID,Price,Duration,Departure")] Flight flight)
 		{
 			if (id != flight.FlightID)
 			{
