@@ -26,8 +26,15 @@ namespace TakeAFlight.Controllers
             }).ToList();
             return View();
         }
+		[HttpPost]
+		public  JsonResult GetDestinations()
+		{
+			var Dest = dbContext.Destinations;
+			return new JsonResult(Dest);
 
-        public IActionResult About()
+		}
+
+		public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
 
