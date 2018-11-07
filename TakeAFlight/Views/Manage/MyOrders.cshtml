@@ -1,4 +1,6 @@
-﻿
+﻿@model PagedList.IPagedList<Tuple<int, string, string, double, int>>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewData["Title"] = "My Orders";
     ViewData.AddActivePage(ManageNavPages.MyOrders);
@@ -22,15 +24,31 @@
         </thead>
         <tbody>
             @foreach (Tuple<int, string, string, double, int> t in message)
+                {
+                    <tr>
+                        <td>@t.Item1</td>
+                        <td>@t.Item2</td>
+                        <td>@t.Item3</td>
+                        <td>@t.Item4</td>
+                        <td>@t.Item5</td>
+                    </tr>
+                }
+            @*@foreach (var item in Model)
             {
                 <tr>
-                    <td>@t.Item1</td>
-                    <td>@t.Item2</td>
-                    <td>@t.Item3</td>
-                    <td>@t.Item4</td>
-                    <td>@t.Item5</td>
+                    <td>@item.Item1</td>
+                    <td>@item.Item2</td>
+                    <td>@item.Item3</td>
+                    <td>@item.Item4</td>
+                    <td>@item.Item5</td>
                 </tr>
-            }
+            }*@
         </tbody>
     </Table>
+    <br />
 }
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@*@Html.pag*@
+
+@*@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
