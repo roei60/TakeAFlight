@@ -1,11 +1,11 @@
-﻿@model PagedList.IPagedList<Tuple<int, string, string, double, int>>
+﻿@model ReflectionIT.Mvc.Paging.PagingList<TakeAFlight.Models.FlightOrder>
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewData["Title"] = "My Orders";
     ViewData.AddActivePage(ManageNavPages.MyOrders);
 
-    var message = (List<Tuple<int, string, string, double, int>>)ViewData["Message"];
+    //var message = (List<Tuple<int, string, string, double, int>>)ViewData["Message"];
 }
 
 <h4>My Orders</h4>
@@ -15,7 +15,6 @@
     <Table class="table">
         <thead>
             <tr>
-                <th>Flight ID</th>
                 <th>Destination</th>
                 <th>Duration</th>
                 <th>Price</th>
@@ -23,32 +22,16 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (Tuple<int, string, string, double, int> t in message)
+                @foreach (var item in Model)
                 {
+                    var DestinationDetails = item.Flight.Destination.ToString();
                     <tr>
-                        <td>@t.Item1</td>
-                        <td>@t.Item2</td>
-                        <td>@t.Item3</td>
-                        <td>@t.Item4</td>
-                        <td>@t.Item5</td>
+                        <td>@Html.DisplayFor(modelItem => DestinationDetails)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Flight.Duration)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Flight.Price)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
                     </tr>
                 }
-            @*@foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Item1</td>
-                    <td>@item.Item2</td>
-                    <td>@item.Item3</td>
-                    <td>@item.Item4</td>
-                    <td>@item.Item5</td>
-                </tr>
-            }*@
         </tbody>
     </Table>
-    <br />
 }
-@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
-
-@*@Html.pag*@
-
-@*@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@

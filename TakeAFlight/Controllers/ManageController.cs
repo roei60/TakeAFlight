@@ -535,24 +535,16 @@ namespace TakeAFlight.Controllers
         [Authorize]
         public async Task<IActionResult> MyOrders()
         {
-            var tupleList = new List<Tuple<int, string, string, double, int>> { };
-
             var user = await _userManager.GetUserAsync(User);
             var passanger = _takeAFlightContext.Passengers.FirstOrDefault(obj => obj.ApplicationUserID == user.Id);
 
-            var orders = await _takeAFlightContext.FlightOrders.Where(f => f.PassengerID == passanger.ID).ToListAsync();
+            var orders = from flightOrder in _takeAFlightContext.FlightOrders.Include(obj => obj.Flight).Include(obj => obj.Flight.Destination)
+                         where flightOrder.PassengerID == passanger.ID
+                          select flightOrder;
 
-            foreach(FlightOrder o in orders)
-            {
-                var flight = _takeAFlightContext.Flight.SingleOrDefault(f => f.FlightID == o.FlightID);
-                var dest = _takeAFlightContext.Destinations.SingleOrDefault(d => d.DestinationID == flight.DestinationID);
+            var model = await PagingList.CreateAsync(orders, 10, 1, "Destination", "Destination");
 
-                tupleList.Add(Tuple.Create(flight.FlightID, dest.ToString(), flight.Duration.ToString(), flight.Price, o.Quantity));
-            }
-
-            ViewData["Message"] = tupleList;
-
-            return View();
+            return View(model);
         }
 
 
