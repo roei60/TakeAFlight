@@ -18,7 +18,10 @@ if ($(document).ready(function () {
         //ajax request for getting flight data
         $.post($(this).attr("href"), { FlightId: param }, function (data, status) {
             console.log(data);
-            cart.AddItemToCart(data);
+            if(data!="Error")
+                cart.AddItemToCart(data);
+            else
+                alert("An Error has occured adding that flight to cart, pls try again later...")
         });
     })
     //avoid the list from being close on click

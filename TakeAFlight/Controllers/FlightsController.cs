@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using ReflectionIT.Mvc.Paging;
 using TakeAFlight.Data;
 using TakeAFlight.Models;
+using TakeAFlight.Models.ML;
 
 namespace TakeAFlight.Controllers
 {
@@ -30,35 +31,63 @@ namespace TakeAFlight.Controllers
 			//LoadDefaultData.CreateRandomFlightsData(_context);
 		}
 
-        [Authorize]
-        [HttpPost]
-		public async Task<JsonResult> AddToCart(int? FlightId)
+		[Authorize]
+		[HttpPost]
+		public JsonResult AddToCart(int? FlightId)
 		{
-
 			Flight RequestedFlight;
-			RequestedFlight = await _context.Flight.Include(f=>f.Destination).SingleOrDefaultAsync(flight => flight.FlightID == FlightId);
-			return new JsonResult(RequestedFlight);
+			var Flight = from flight in _context.Flight
+						 join dest in _context.Destinations on flight.DestinationID equals dest.DestinationID
+						 where flight.FlightID == FlightId
+						 select new Flight() { FlightID = flight.FlightID, Departure = flight.Departure, Destination = dest, DestinationID = dest.DestinationID, Duration = flight.Duration, Price = flight.Price };
+			if (Flight != null && Flight.Count() > 0)
+			{
+				RequestedFlight = Flight.ToList()[0];
+				return new JsonResult(RequestedFlight);
+			}
+			else
+				return new JsonResult("Error");
 
 		}
 
-        // GET: Flights
-        [Authorize]
-        public async Task<IActionResult> Index(DateTime Departure, string SearchFlights = "1", string sortExpression = "Destination", int page = 1, float Price = float.MaxValue)
-        {
-            var takeAFlightContext = _context.Flight.Include(f => f.Destination);
-            var Flights = from flights in takeAFlightContext select flights;
+		// GET: Flights
+		[Authorize]
+		public async Task<IActionResult> Index(DateTime Departure, int DestId = -1, string sortExpression = "Destination", int page = 1, float Price = float.MaxValue)
+		{
+			IQueryable<Flight> Flights;
+			if (DestId == -1)
+				Flights = from flights in _context.Flight
+						  join dest in _context.Destinations on flights.DestinationID equals dest.DestinationID
+						  where flights.Price <= Price && flights.Departure > Departure
+						  select new Flight() { FlightID = flights.FlightID, Departure = flights.Departure, Destination = dest, DestinationID = dest.DestinationID, Duration = flights.Duration, Price = flights.Price };
+			else
+				Flights = from flights in _context.Flight
+						  join dest in _context.Destinations on flights.DestinationID equals dest.DestinationID
+						  where flights.Price <= Price && flights.Departure > Departure && flights.DestinationID == DestId
+						  select new Flight() { FlightID = flights.FlightID, Departure = flights.Departure, Destination = dest, DestinationID = dest.DestinationID, Duration = flights.Duration, Price = flights.Price };
 
-            Flights = Flights.Where(obj => obj.Price <= Price && obj.Departure > Departure && obj.Destination.DestinationID == (int.Parse(SearchFlights)));
+			int pageSize = 10;
+			var model = await PagingList.CreateAsync(Flights, pageSize, page, sortExpression, "Destination");
+			model.RouteValue = new Microsoft.AspNetCore.Routing.RouteValueDictionary { { "DestId", DestId }, { "Price", Price }, { "Departure", Departure } };
 
-            int pageSize = 10;
-            var model = await PagingList.CreateAsync(Flights, pageSize, page, sortExpression, "Destination");
-            model.RouteValue = new Microsoft.AspNetCore.Routing.RouteValueDictionary { { "SearchFlights", SearchFlights }, { "Price", Price }, { "Departure", Departure } };
-            return View(model);
-        }
+			//Recommand user destinations.
+			var destination = _context.Destinations.ToList();
+			if (User.Identity.IsAuthenticated)
+			{
+				var AplicationUser = _Userscontext.Users.Where(obj => obj.UserName == User.Identity.Name);
+				var Passenger = _context.Passengers.Include(obj => obj.User).SingleOrDefault(obj => obj.User.UserName == User.Identity.Name);
+				if (Passenger != null && destination != null)
+				{
+					var prediction = DestinationPredictionManager.Instance.Predict(Passenger, destination);
+					ViewBag.Prediction = prediction;
+				}
+			}
+			return View(model);
+		}
 
-        // GET: Flights/Details/5
-        [Authorize]
-        public async Task<IActionResult> Details(int? id)
+		// GET: Flights/Details/5
+		[Authorize]
+		public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)
 			{
@@ -136,8 +165,8 @@ namespace TakeAFlight.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("FlightID,DestinationID,Price,Duration,Departure")] Flight flight)
+		[Authorize]
+		public async Task<IActionResult> Edit(int id, [Bind("FlightID,DestinationID,Price,Duration,Departure")] Flight flight)
 		{
 			if (id != flight.FlightID)
 			{
