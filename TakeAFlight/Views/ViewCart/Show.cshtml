@@ -16,9 +16,6 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.FlightID)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.Destination)
                     </th>
                     <th>
@@ -40,9 +37,6 @@
                 {
                     var DestinationDetails = item.Destination.ToString();
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FlightID)
-                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => DestinationDetails)
                             <input type="hidden" name="dest_details" value="@DestinationDetails" />
