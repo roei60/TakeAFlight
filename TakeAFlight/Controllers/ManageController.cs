@@ -555,8 +555,19 @@ namespace TakeAFlight.Controllers
             return View();
         }
 
+        public IActionResult Statistics()
+        {
+            ViewData["Message"] = "A Little Bit of Statistics ";
 
-        #region Destination
+            return View();
+        }
+        public IActionResult Statistics1()
+        {
+            ViewData["Message"] = "A Little Bit of Statistics ";
+
+            return View();
+        }
+         #region Destination
 
         [Authorize(Roles = "Admin")]
 		public async Task<IActionResult> ViewDestinations(string sortExpression = "Country", int page = 1, string filter = "")

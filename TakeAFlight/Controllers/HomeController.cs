@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TakeAFlight.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace TakeAFlight.Controllers
 {
@@ -26,15 +27,15 @@ namespace TakeAFlight.Controllers
             }).ToList();
             return View();
         }
-		[HttpPost]
-		public  JsonResult GetDestinations()
-		{
-			var Dest = dbContext.Destinations;
-			return new JsonResult(Dest);
+        [HttpPost]
+        public JsonResult GetDestinations()
+        {
+            var Dest = dbContext.Destinations;
+            return new JsonResult(Dest);
 
-		}
+        }
 
-		public IActionResult About()
+        public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
 
@@ -48,9 +49,55 @@ namespace TakeAFlight.Controllers
             return View();
         }
 
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpGet]
+        public JsonResult CountFlightsByYear(int Year = 2019)
+        {
+            //  var flights = dbContext.Flight.Include(obj => obj.Destination);
+            var qr = from selection in dbContext.Flight
+                     where selection.Departure.Value.Year == Year
+                     group selection by selection.Departure.Value.Month into grp
+                     select new { key= grp.Key, value = grp.Count() };
+
+            return Json(qr.ToList());
+
+
+
+        }
+        [HttpGet]
+        public JsonResult AvgPriceByYear(int year=2019)
+        {
+            //  var flights = dbContext.Flight.Include(obj => obj.Destination);
+            var qr = from selection in dbContext.Flight
+                     where selection.Departure.Value.Year == year
+                     group selection by selection.Departure.Value.Month into grp
+                     //     group selection by selection.Departure.Value.Month into grp
+                     select new { key = grp.Key, value = Math.Round(grp.Average(obj => obj.Price)) };
+
+
+
+          //  foreach (var item in qr.ToList())
+            //{
+
+           // }
+
+
+            return Json(qr.ToList());
+
+
+
+
+
+        }
+
+
+
+
+
     }
 }

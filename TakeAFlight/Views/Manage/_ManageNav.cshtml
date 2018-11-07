@@ -11,7 +11,8 @@
     @if (User.IsInRole("Admin"))
     {
         <li class="@ManageNavPages.ViewDestinations(ViewContext)"><a asp-action="ViewDestinations">Destinations</a></li>
-
+        <li class="@ManageNavPages.ViewStatistics(ViewContext)"><a asp-action="Statistics">Number of Filght In Month</a></li>
+        <li class="@ManageNavPages.ViewStatistics1(ViewContext)"><a asp-action="Statistics1">Price Avg By Month Statistic</a></li>
     }
     @*@if (hasExternalLogins)
         {
