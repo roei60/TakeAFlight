@@ -16,13 +16,13 @@
                 <div class="row-padding" style="margin:0 -16px;">
                     <div class="half margin-bottom">
                         <label>Travel the world with us</label>
-                        <select asp-for="Destination" class="b" asp-items="ViewBag.Items" name="SearchFlights"></select>
+                        <select asp-for="Destination" class="b" asp-items="ViewBag.Items" name="DestId"></select>
                         <span asp-validation-for="Destination" class="a"></span>
                     </div>
                 </div>
                 <div class="half">
                     <label>Departure:  </label>
-                    <input type="date" name="Departure" value="2019-01-08"/>
+                    <input type="date" name="Departure" value="2019-01-08" />
                 </div>
 
                 <div>
@@ -43,7 +43,7 @@
 <div class="content" style="max-width:1100px;">
 
     <!-- Good offers -->
-    
+
     <div class="container margin-top">
         <h3>Good Offers Right Now</h3>
         <h6>Up to <strong>50%</strong> discount.</h6>
@@ -86,7 +86,7 @@
                 </div>
             </div>
         </div>
-        
+
         :after
     </div>
 </div>
@@ -126,22 +126,57 @@
 </div>
 
 <!-- WeatherApi -->
+<div class="container ">
+    <div class="panel padding-16 card ">
+        <h2 >Get Current Weather</h2>
+
+        <div class="row form-group">
+            <input type="text" name="city" id="city" class="form-control" placeholder="Enter City Name" />
+            <button id="submitWeather" class="button dark-gray">Search City</button>
+        </div>
+        <span id="error"></span>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
-        $("button").click(function () {
-            $.get("https://api.openweathermap.org/data/2.5/weather?q=London&APPID=9175ff39671c7153c41914edb620f4e7", function (response) {
-                $("#reply").text(JSON.stringify(response));
-                console.log(response.weather[0].icon);
-            });
-        });
+        $('#submitWeather').click(function () {
+            var city = $("#city").val();
+            if (city != '') {
+                $.ajax({
+                    url: 'https://api.openweathermap.org/data/2.5/weather?q=' + city + "&units=metric" + "&APPID=d147dcd63d948cf6bb4a9d7437357187",
+                    type: "GET",
+                    dataType: "jsonp",
+                    success: function (data) {
+                        var widget = show(data);
+
+                        $("#error").html(widget);
+
+                        $("#city").val('');
+                    },
+                    error: function (request, status, error) {
+                        $("#error").html("something went wrong pls try again later...");
+                    }
+                });
+            } else {
+                $("#error").html('Field cannot be empty');
+            }
+        })
     });
+
+    function show(data) {
+        return "<h3> Current Weather for " +
+            data.name + ", " + data.sys.country + "</h3>"+
+            "<h3><strong>Weather</strong>: " + data.weather[0].main + "</h3>" +
+            "<h3><strong>Description</strong>: " + data.weather[0].description + "<img src='http://openweathermap.org/img/w/" + data.weather[0].icon + ".png'> "+"</h3>" + 
+            "<h3><strong>Temperature</strong>: " + data.main.temp + " &deg;C </h3>" +
+            "<h3><strong>Pressure</strong>: " + data.main.pressure + " hPa </h3>" +
+            "<h3><strong>Humidity</strong>: " + data.main.humidity + " % </h3>" +
+            "<h3><strong>Min. Temperature</strong>: " + data.main.temp_min + " &deg;C </h3>" +
+            "<h3><strong>Max. Temperature</strong>: " + data.main.temp_max + " &deg;C </h3>" +
+            "<h3><strong>Wind Speed</strong>: " + data.wind.speed + "m/s </h3>" +
+            "<h3><strong>Wind Direction</strong>: " + data.wind.deg + " &deg; </h3>" 
+    }
 </script>
-
-<section>
-    <button>Get Weather</button>
-    <p id="reply"></p>
-</section>
-
 
 <!-- Video  -->
 <div class="container ">
