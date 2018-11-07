@@ -5,6 +5,8 @@
     var message = (List<Tuple<string, string, int>>)ViewData["Message"];
 }
 
+<script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+
 <h2>Order</h2>
 
 
@@ -31,15 +33,14 @@
             }
         </Table>
 
-        @*<a class="twitter-share-button"
-               href="https://twitter.com/intent/tweet"
-               data-size="large"
-               data-text="TakeAFlight is the best"
-               data-url="https://dev.twitter.com/web/tweet-button"
-               data-hashtags="TakeAFlight">
-                Tweet
-        </a>*@
-    }
+        var text = string.Format("I have just orderd {0} flight!", message.Count);
+        <a class="twitter-share-button"
+           href="https://twitter.com/intent/tweet?text=@text"
+           data-size="large"
+           data-hashtags="TakeAFlight">
+            Tweet
+        </a>
+}
     else
     {
         <h3>Error in the order!</h3>

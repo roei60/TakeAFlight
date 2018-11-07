@@ -551,7 +551,8 @@ namespace TakeAFlight.Controllers
             }
 
             ViewData["Message"] = tupleList;
-            return View(orders);
+
+            return View();
         }
 
 

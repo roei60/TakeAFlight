@@ -47,7 +47,7 @@ class CartManager {
 
     SendDataToViewCart(e) {
         var flightsIdArray = []
-     
+
         Object.keys(Cart.items).forEach(function (key) {
             flightsIdArray.push(parseInt(key));
         });
@@ -56,15 +56,15 @@ class CartManager {
     }
 
     UpdateCartSize() {
-        
-      $("#CartLength").html(" "+Cart.Count+" - Items")
+
+        $("#CartLength").html(" "+Cart.Count+" - Items")
     }
 
     initCart(thatCart) {
-
-        for (var key in thatCart.items) {
-            this.AddItemToCart(thatCart.items[key]);
-        }
+        if (thatCart != undefined && thatCart != null)
+            for (var key in thatCart.items) {
+                this.AddItemToCart(thatCart.items[key]);
+            }
 
     }
 }

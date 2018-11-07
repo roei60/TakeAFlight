@@ -54,7 +54,7 @@ namespace TakeAFlight.Models.ML
                     year = passenger.DateOfBirth.Value.Year
 
                 });
-            return destinations.FirstOrDefault(obj => obj.Country.Equals(prediction.PredictedLabels));
+            return destinations.FirstOrDefault(obj => obj.Country.Contains(prediction.PredictedLabels));
 
         }
 
