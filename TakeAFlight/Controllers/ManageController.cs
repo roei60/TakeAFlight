@@ -17,6 +17,7 @@ using TakeAFlight.Models.ManageViewModels;
 using TakeAFlight.Services;
 using ReflectionIT.Mvc.Paging;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TakeAFlight.Controllers
 {
@@ -533,26 +534,38 @@ namespace TakeAFlight.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> MyOrders()
+        public async Task<IActionResult> MyOrders(DateTime Departure, int DestId = -1, string sortExpression = "Flight.Destination", int page = 1, float Price = float.MaxValue)
         {
-            var tupleList = new List<Tuple<int, string, string, double, int>> { };
-
+            IQueryable<FlightOrder> orders;
             var user = await _userManager.GetUserAsync(User);
             var passanger = _takeAFlightContext.Passengers.FirstOrDefault(obj => obj.ApplicationUserID == user.Id);
 
-            var orders = await _takeAFlightContext.FlightOrders.Where(f => f.PassengerID == passanger.ID).ToListAsync();
+            var allFlightOrders = _takeAFlightContext.FlightOrders.Include(obj => obj.Flight).Include(obj => obj.Flight.Destination);
 
-            foreach(FlightOrder o in orders)
+            if (DestId == -1)
             {
-                var flight = _takeAFlightContext.Flight.SingleOrDefault(f => f.FlightID == o.FlightID);
-                var dest = _takeAFlightContext.Destinations.SingleOrDefault(d => d.DestinationID == flight.DestinationID);
-
-                tupleList.Add(Tuple.Create(flight.FlightID, dest.ToString(), flight.Duration.ToString(), flight.Price, o.Quantity));
+                orders = from flightOrder in allFlightOrders
+                             where flightOrder.PassengerID == passanger.ID && flightOrder.Flight.Price <= Price && flightOrder.Flight.Departure > Departure
+                             select flightOrder;
+            }
+            else
+            {
+                orders = from flightOrder in allFlightOrders
+                         where flightOrder.PassengerID == passanger.ID && flightOrder.Flight.Price <= Price && flightOrder.Flight.Departure > Departure && flightOrder.Flight.DestinationID == DestId
+                         select flightOrder;
             }
 
-            ViewData["Message"] = tupleList;
+            var model = await PagingList.CreateAsync(orders, 10, page, sortExpression, "Flight.Destination");
+            model.RouteValue = new RouteValueDictionary { { "DestId", DestId }, { "Price", Price }, { "Departure", Departure } };
+            model.Action = "MyOrders";
 
-            return View();
+            ViewBag.Items = _takeAFlightContext.Destinations.Select(obj => new SelectListItem()
+            {
+                Text = obj.ToString(),
+                Value = obj.DestinationID.ToString()
+            }).ToList();
+
+            return View(model);
         }
 
         public IActionResult Statistics()

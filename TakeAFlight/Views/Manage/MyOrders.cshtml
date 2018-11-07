@@ -1,54 +1,56 @@
-﻿@model PagedList.IPagedList<Tuple<int, string, string, double, int>>
-@using PagedList.Mvc;
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+﻿@model ReflectionIT.Mvc.Paging.PagingList<TakeAFlight.Models.FlightOrder>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
 @{
     ViewData["Title"] = "My Orders";
     ViewData.AddActivePage(ManageNavPages.MyOrders);
-
-    var message = (List<Tuple<int, string, string, double, int>>)ViewData["Message"];
 }
 
 <h4>My Orders</h4>
 
 @if (Model != null)
 {
+    <h5>Filter By:</h5>
+    <form action="/Manage/MyOrders" method="get">
+        <select class="b" asp-items="ViewBag.Items" name="DestId"></select>
+        <label>Departure:</label>
+        <input type="date" name="Departure" value="2019-01-08"/>
+        <label>Price:</label>
+        <input type="number" name="Price"/>
+        <button class="btn btn-info" type="submit">Filter</button>
+    </form>
+    <br>
     <Table class="table">
         <thead>
             <tr>
-                <th>Flight ID</th>
-                <th>Destination</th>
-                <th>Duration</th>
-                <th>Price</th>
-                <th>Quantity</th>
+                <th>
+                    @Html.SortableHeaderFor(model => model.Flight.Destination)
+                </th>
+                <th>
+                    @Html.SortableHeaderFor(model => model.Flight.Departure)
+                </th>
+                <th>
+                    @Html.SortableHeaderFor(model => model.Flight.Price)
+                </th>
+                <th>
+                    @Html.SortableHeaderFor(model => model.Quantity)
+                </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (Tuple<int, string, string, double, int> t in message)
-                {
-                    <tr>
-                        <td>@t.Item1</td>
-                        <td>@t.Item2</td>
-                        <td>@t.Item3</td>
-                        <td>@t.Item4</td>
-                        <td>@t.Item5</td>
-                    </tr>
-                }
-            @*@foreach (var item in Model)
+            @foreach (var item in Model)
             {
+                var DestinationDetails = item.Flight.Destination.ToString();
                 <tr>
-                    <td>@item.Item1</td>
-                    <td>@item.Item2</td>
-                    <td>@item.Item3</td>
-                    <td>@item.Item4</td>
-                    <td>@item.Item5</td>
+                    <td>@Html.DisplayFor(modelItem => DestinationDetails)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Flight.Departure)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Flight.Price)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
                 </tr>
-            }*@
+            }
         </tbody>
     </Table>
+
     <br />
+    <vc:pager paging-list="@Model" />
 }
-@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
-
-@*@Html.pag*@
-
-@*@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
