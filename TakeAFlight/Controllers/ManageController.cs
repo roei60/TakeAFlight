@@ -17,6 +17,7 @@ using TakeAFlight.Models.ManageViewModels;
 using TakeAFlight.Services;
 using ReflectionIT.Mvc.Paging;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TakeAFlight.Controllers
 {
@@ -533,16 +534,36 @@ namespace TakeAFlight.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> MyOrders()
+        public async Task<IActionResult> MyOrders(DateTime Departure, int DestId = -1, string sortExpression = "Flight.Destination", int page = 1, float Price = float.MaxValue)
         {
+            IQueryable<FlightOrder> orders;
             var user = await _userManager.GetUserAsync(User);
             var passanger = _takeAFlightContext.Passengers.FirstOrDefault(obj => obj.ApplicationUserID == user.Id);
 
-            var orders = from flightOrder in _takeAFlightContext.FlightOrders.Include(obj => obj.Flight).Include(obj => obj.Flight.Destination)
-                         where flightOrder.PassengerID == passanger.ID
-                          select flightOrder;
+            var allFlightOrders = _takeAFlightContext.FlightOrders.Include(obj => obj.Flight).Include(obj => obj.Flight.Destination);
 
-            var model = await PagingList.CreateAsync(orders, 10, 1, "Destination", "Destination");
+            if (DestId == -1)
+            {
+                orders = from flightOrder in allFlightOrders
+                             where flightOrder.PassengerID == passanger.ID && flightOrder.Flight.Price <= Price && flightOrder.Flight.Departure > Departure
+                             select flightOrder;
+            }
+            else
+            {
+                orders = from flightOrder in allFlightOrders
+                         where flightOrder.PassengerID == passanger.ID && flightOrder.Flight.Price <= Price && flightOrder.Flight.Departure > Departure && flightOrder.Flight.DestinationID == DestId
+                         select flightOrder;
+            }
+
+            var model = await PagingList.CreateAsync(orders, 10, page, sortExpression, "Flight.Destination");
+            model.RouteValue = new RouteValueDictionary { { "DestId", DestId }, { "Price", Price }, { "Departure", Departure } };
+            model.Action = "MyOrders";
+
+            ViewBag.Items = _takeAFlightContext.Destinations.Select(obj => new SelectListItem()
+            {
+                Text = obj.ToString(),
+                Value = obj.DestinationID.ToString()
+            }).ToList();
 
             return View(model);
         }
