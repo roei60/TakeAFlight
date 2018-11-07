@@ -2,37 +2,40 @@
     ViewData["Title"] = "Contact";
 }
 
-
-<!-- Contact -->
-<div class="container">
-    <h2>Contact</h2>
-    <p>Let us book your next trip!</p>
-    <address>
-        Colman, Israel<br>
-        Eli Vizel 2, Rishon Le Zion<br />
-        <abbr title="Phone">P:</abbr>
-        +972 12345678
-    </address>
-
-
-    <address>
-        <strong>Support:</strong> <a href="mailto:Support@takeaflight.com">Support@takeaflight.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@takeflight.com">Marketing@takeflight.com</a>
-    </address>
-
-</div>
-
-
-<!--Canvas-->
 <div class="container ">
-    <canvas id="myCanvas" width="300" height="100">
-        Your browser does not support the HTML5 canvas tag.
-    </canvas>
-</div>
-<script>
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
-    ctx.font = "30px Arial";
-    ctx.strokeText("Let us book your next trip!", 10, 50);
-</script>
+    <div class="panel padding-16 card ">
+        <!-- Contact -->
+        <div class="container">
+            <h2>Contact</h2>
+            <p>Let us book your next trip!</p>
+            <address>
+                Colman, Israel<br>
+                Eli Vizel 2, Rishon Le Zion<br />
+                <abbr title="Phone">P:</abbr>
+                +972 12345678
+            </address>
 
+
+            <address>
+                <strong>Support:</strong> <a href="mailto:Support@takeaflight.com">Support@takeaflight.com</a><br />
+                <strong>Marketing:</strong> <a href="mailto:Marketing@takeflight.com">Marketing@takeflight.com</a>
+            </address>
+
+        </div>
+
+
+        <!--Canvas-->
+        <div class="container ">
+            <canvas id="myCanvas" width="300" height="200">
+                Your browser does not support the HTML5 canvas tag.
+            </canvas>
+        </div>
+        <script>
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            ctx.font = "30px Arial";
+            ctx.strokeText("Let us book your next trip!", 15, 100);
+        </script>
+
+        </div>
+</div>

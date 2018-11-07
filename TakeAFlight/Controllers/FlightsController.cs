@@ -59,12 +59,14 @@ namespace TakeAFlight.Controllers
 				Flights = from flights in _context.Flight
 						  join dest in _context.Destinations on flights.DestinationID equals dest.DestinationID
 						  where flights.Price <= Price && flights.Departure > Departure
-						  select new Flight() { FlightID = flights.FlightID, Departure = flights.Departure, Destination = dest, DestinationID = dest.DestinationID, Duration = flights.Duration, Price = flights.Price };
+						  select new Flight() { FlightID = flights.FlightID, Departure = flights.Departure, Destination = dest, DestinationID = dest.DestinationID,
+                              Duration = flights.Duration, Price = flights.Price };
 			else
 				Flights = from flights in _context.Flight
 						  join dest in _context.Destinations on flights.DestinationID equals dest.DestinationID
 						  where flights.Price <= Price && flights.Departure > Departure && flights.DestinationID == DestId
-						  select new Flight() { FlightID = flights.FlightID, Departure = flights.Departure, Destination = dest, DestinationID = dest.DestinationID, Duration = flights.Duration, Price = flights.Price };
+						  select new Flight() { FlightID = flights.FlightID, Departure = flights.Departure, Destination = dest, DestinationID = dest.DestinationID,
+                              Duration = flights.Duration, Price = flights.Price };
 
 			int pageSize = 10;
 			var model = await PagingList.CreateAsync(Flights, pageSize, page, sortExpression, "Destination");

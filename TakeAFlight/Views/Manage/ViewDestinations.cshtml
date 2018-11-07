@@ -7,48 +7,52 @@
 	ViewData.AddActivePage(ManageNavPages.viewDestinations);
 
 }
-<h2>Our Destinations</h2>
+<div class="container ">
+    <div class="panel padding-16 card ">
+        <h2>Our Destinations</h2>
 
-<p>
-	<a asp-action="CreateDestination">Create New</a>
-</p>
+        <p>
+            <a asp-action="CreateDestination">Create New</a>
+        </p>
 
-<form method="get" class="form-inline">
-	<input name="filter" class="form-control" placeholder="Search by country or city"
-		   value="@Model.RouteValue["Filter"]" />
-	<button type="submit" class="btn btn-info">
-		<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
-	</button>
-</form>
-<table class="table">
-	<thead>
-		<tr>
-			<th>
-				@Html.SortableHeaderFor(model => model.Country)
-			</th>
-			<th>
-				@Html.SortableHeaderFor(model => model.City)
-			</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var item in Model)
-		{
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.Country)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.City)
-				</td>
-				<td>
-					<a asp-action="EditDestination" asp-route-id="@item.DestinationID">Edit</a> |
-					<a asp-action="DeleteDestination" asp-route-id="@item.DestinationID">Delete</a>
-				</td>
-			</tr>
-		}
-	</tbody>
-</table>
-<br />
-<vc:pager paging-list="@Model" />
+        <form method="get" class="form-inline">
+            <input name="filter" class="form-control" placeholder="Search by country or city"
+                   value="@Model.RouteValue["Filter"]" />
+            <button type="submit" class="btn btn-info">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+            </button>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.SortableHeaderFor(model => model.Country)
+                    </th>
+                    <th>
+                        @Html.SortableHeaderFor(model => model.City)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Country)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            <a asp-action="EditDestination" asp-route-id="@item.DestinationID">Edit</a> |
+                            <a asp-action="DeleteDestination" asp-route-id="@item.DestinationID">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        </div>
+    </div>
+        <vc:pager paging-list="@Model" />

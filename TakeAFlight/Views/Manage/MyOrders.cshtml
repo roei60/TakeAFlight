@@ -7,48 +7,51 @@
 
     var message = (List<Tuple<int, string, string, double, int>>)ViewData["Message"];
 }
+<div class="container ">
+    <div class="panel padding-16 card ">
+        <h4>My Orders</h4>
 
-<h4>My Orders</h4>
-
-@if (Model != null)
-{
-    <Table class="table">
-        <thead>
-            <tr>
-                <th>Flight ID</th>
-                <th>Destination</th>
-                <th>Duration</th>
-                <th>Price</th>
-                <th>Quantity</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Tuple<int, string, string, double, int> t in message)
-                {
+        @if (Model != null)
+        {
+            <Table class="table">
+                <thead>
                     <tr>
-                        <td>@t.Item1</td>
-                        <td>@t.Item2</td>
-                        <td>@t.Item3</td>
-                        <td>@t.Item4</td>
-                        <td>@t.Item5</td>
+                        <th>Flight ID</th>
+                        <th>Destination</th>
+                        <th>Duration</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
                     </tr>
-                }
-            @*@foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Item1</td>
-                    <td>@item.Item2</td>
-                    <td>@item.Item3</td>
-                    <td>@item.Item4</td>
-                    <td>@item.Item5</td>
-                </tr>
-            }*@
-        </tbody>
-    </Table>
-    <br />
-}
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                </thead>
+                <tbody>
+                    @foreach (Tuple<int, string, string, double, int> t in message)
+                    {
+                        <tr>
+                            <td>@t.Item1</td>
+                            <td>@t.Item2</td>
+                            <td>@t.Item3</td>
+                            <td>@t.Item4</td>
+                            <td>@t.Item5</td>
+                        </tr>
+                    }
+                    @*@foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Item1</td>
+                                <td>@item.Item2</td>
+                                <td>@item.Item3</td>
+                                <td>@item.Item4</td>
+                                <td>@item.Item5</td>
+                            </tr>
+                        }*@
+                </tbody>
+            </Table>
+            <br />
+        }
+        </div>
+    </div>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-@*@Html.pag*@
+        @*@Html.pag*@
 
-@*@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
+        @*@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@

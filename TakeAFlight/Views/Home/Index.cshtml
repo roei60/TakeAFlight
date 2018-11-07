@@ -125,14 +125,27 @@
     </div>
 </div>
 
-<!-- WeatherApi -->
+
+<!-- Video  -->
 <div class="container ">
     <div class="panel padding-16 card ">
-        <h2 >Get Current Weather</h2>
+        <h2>Top 10 Best Cities to Visit in Europe</h2>
+        <video id="video1" controls="controls" style="width:100%;">
+            <source src="~/video/videoplayback.mp4" type="video/mp4" />
+        </video>
+    </div>
+</div>
+
+
+
+<!-- WeatherApi -->
+<div class="container ">
+    <div class="panel padding-16 black card">
+        <h2>Get Current Weather</h2>
 
         <div class="row form-group">
-            <input type="text" name="city" id="city" class="form-control" placeholder="Enter City Name" />
-            <button id="submitWeather" class="button dark-gray">Search City</button>
+            <input class="input border form-control" type="text" name="city" id="city" placeholder="Enter City Name" />
+            <button id="submitWeather" class="button red margin-top">Search City</button>
         </div>
         <span id="error"></span>
     </div>
@@ -165,40 +178,18 @@
 
     function show(data) {
         return "<h3> Current Weather for " +
-            data.name + ", " + data.sys.country + "</h3>"+
+            data.name + ", " + data.sys.country + "</h3>" +
             "<h3><strong>Weather</strong>: " + data.weather[0].main + "</h3>" +
-            "<h3><strong>Description</strong>: " + data.weather[0].description + "<img src='http://openweathermap.org/img/w/" + data.weather[0].icon + ".png'> "+"</h3>" + 
+            "<h3><strong>Description</strong>: " + data.weather[0].description + "<img src='http://openweathermap.org/img/w/" + data.weather[0].icon + ".png'> " + "</h3>" +
             "<h3><strong>Temperature</strong>: " + data.main.temp + " &deg;C </h3>" +
             "<h3><strong>Pressure</strong>: " + data.main.pressure + " hPa </h3>" +
             "<h3><strong>Humidity</strong>: " + data.main.humidity + " % </h3>" +
             "<h3><strong>Min. Temperature</strong>: " + data.main.temp_min + " &deg;C </h3>" +
             "<h3><strong>Max. Temperature</strong>: " + data.main.temp_max + " &deg;C </h3>" +
             "<h3><strong>Wind Speed</strong>: " + data.wind.speed + "m/s </h3>" +
-            "<h3><strong>Wind Direction</strong>: " + data.wind.deg + " &deg; </h3>" 
+            "<h3><strong>Wind Direction</strong>: " + data.wind.deg + " &deg; </h3>"
     }
 </script>
-
-<!-- Video  -->
-<div class="container ">
-    <div class="panel padding-16 card ">
-        <h2>Top 10 Best Cities to Visit in Europe</h2>
-        <video id="video1" controls="controls" style="width:100%;">
-            <source src="~/video/videoplayback.mp4" type="video/mp4" />
-        </video>
-    </div>
-</div>
-
-<!-- Newsletter -->
-<div class="container">
-    <div class="panel padding-16 black opacity card hover-opacity-off">
-        <h2>Get the best offers first!</h2>
-        <p>Join our newsletter.</p>
-        <label>E-mail</label>
-        <input class="input border" type="text" placeholder="Your Email address">
-        <button type="button" class="button red margin-top">Subscribe</button>
-    </div>
-</div>
-
 
 <!-- End page content -->
 

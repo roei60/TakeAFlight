@@ -5,71 +5,75 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Index</h2>
-@if(ViewBag.Prediction!=null)
-{
-	<a asp-action="Index" asp-route-DestId="@ViewBag.Prediction.DestinationID">You might also want to check: @ViewBag.Prediction.Country </a>
-	
-}
-
-
-@if (User.IsInRole("Admin"))
-{
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.SortableHeaderFor(model => model.Destination)
-            </th>
-            <th>
-                @Html.SortableHeaderFor(model => model.Departure)
-            </th>
-            <th>
-                @Html.SortableHeaderFor(model => model.Duration)
-            </th>
-            <th>
-                @Html.SortableHeaderFor(model => model.Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+<div class="container ">
+    <div class="panel padding-16 card ">
+        <h2>Index</h2>
+        @if (ViewBag.Prediction != null)
         {
-            var DestinationDetails = item.Destination.ToString();
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => DestinationDetails)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Departure)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Duration)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
+            <a asp-action="Index" asp-route-DestId="@ViewBag.Prediction.DestinationID">You might also want to check: @ViewBag.Prediction.Country </a>
 
-                    <a id="AddToCartLink" asp-action="AddToCart" asp-route-id="@item.FlightID">
-                        <span class="glyphicon glyphicon-shopping-cart"></span>
-                    </a>
-                    @if (User.IsInRole("Admin"))
-                    {
-
-                        <a asp-action="Edit" asp-route-id="@item.FlightID">|Edit|</a>
-                        <a asp-action="Details" asp-route-id="@item.FlightID"> Details|</a>
-                        <a asp-action="Delete" asp-route-id="@item.FlightID"> Delete</a>
-                    }
-                </td>
-            </tr>
         }
-    </tbody>
-</table>
-<br />
-<vc:pager paging-list="@Model" />
+
+
+        @if (User.IsInRole("Admin"))
+        {
+            <p>
+                <a asp-action="Create">Create New</a>
+            </p>
+        }
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.SortableHeaderFor(model => model.Destination)
+                    </th>
+                    <th>
+                        @Html.SortableHeaderFor(model => model.Departure)
+                    </th>
+                    <th>
+                        @Html.SortableHeaderFor(model => model.Duration)
+                    </th>
+                    <th>
+                        @Html.SortableHeaderFor(model => model.Price)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    var DestinationDetails = item.Destination.ToString();
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => DestinationDetails)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Departure)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Duration)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+
+                            <a id="AddToCartLink" asp-action="AddToCart" asp-route-id="@item.FlightID">
+                                <span class="glyphicon glyphicon-shopping-cart"></span>
+                            </a>
+                            @if (User.IsInRole("Admin"))
+                            {
+
+                                <a asp-action="Edit" asp-route-id="@item.FlightID">|Edit|</a>
+                                <a asp-action="Details" asp-route-id="@item.FlightID"> Details|</a>
+                                <a asp-action="Delete" asp-route-id="@item.FlightID"> Delete</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        </div>
+    </div>
+        <vc:pager paging-list="@Model" />

@@ -2,65 +2,67 @@
 @{
 	ViewData["Title"] = "Register";
 }
+<div class="container ">
+    <div class="panel padding-16 card ">
+        <h2>@ViewData["Title"]</h2>
 
-<h2>@ViewData["Title"]</h2>
-
-<div class="row">
-	<div class="col-md-4">
-		<form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
-			<h4>Create a new account.</h4>
-			<hr />
-			<div asp-validation-summary="All" class="text-danger"></div>
-			<div class="form-group">
-				<label asp-for="Passenger.IdPassenger"></label>
-				<input asp-for="Passenger.IdPassenger" class="form-control" />
-				<span asp-validation-for="Passenger.IdPassenger" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Passenger.FirstName"></label>
-				<input asp-for="Passenger.FirstName" class="form-control" />
-				<span asp-validation-for="Passenger.FirstName" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Passenger.LastName"></label>
-				<input asp-for="Passenger.LastName" class="form-control" />
-				<span asp-validation-for="Passenger.LastName" class="text-danger"></span>
-			</div>
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                    <h4>Create a new account.</h4>
+                    <hr />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Passenger.IdPassenger"></label>
+                        <input asp-for="Passenger.IdPassenger" class="form-control" />
+                        <span asp-validation-for="Passenger.IdPassenger" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Passenger.FirstName"></label>
+                        <input asp-for="Passenger.FirstName" class="form-control" />
+                        <span asp-validation-for="Passenger.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Passenger.LastName"></label>
+                        <input asp-for="Passenger.LastName" class="form-control" />
+                        <span asp-validation-for="Passenger.LastName" class="text-danger"></span>
+                    </div>
 
 
-			<div class="form-group">
-				<label asp-for="Passenger.Gender" class="control-label"></label>
-				<select asp-for="Passenger.Gender" class="form-control" asp-items="ViewBag.SexList"></select>
-			</div>
-			<div class="form-group">
-				<label asp-for="Passenger.DateOfBirth" class="control-label"></label>
-				<input asp-for="Passenger.DateOfBirth"  type="date" class="form-control" />
+                    <div class="form-group">
+                        <label asp-for="Passenger.Gender" class="control-label"></label>
+                        <select asp-for="Passenger.Gender" class="form-control" asp-items="ViewBag.SexList"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Passenger.DateOfBirth" class="control-label"></label>
+                        <input asp-for="Passenger.DateOfBirth" type="date" class="form-control" />
 
-			</div>
-			<div class="form-group">
-				<label asp-for="Passenger.Nationality" class="control-label"></label>
-				<select asp-for="Passenger.Nationality" class="form-control" asp-items="ViewBag.NationalityList"></select>
-			</div>
-			<div class="form-group">
-				<label asp-for="Email"></label>
-				<input asp-for="Email" class="form-control" />
-				<span asp-validation-for="Email" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Password"></label>
-				<input asp-for="Password" class="form-control" />
-				<span asp-validation-for="Password" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="ConfirmPassword"></label>
-				<input asp-for="ConfirmPassword" class="form-control" />
-				<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-			</div>
-			<button type="submit" class="btn btn-default">Register</button>
-		</form>
-	</div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Passenger.Nationality" class="control-label"></label>
+                        <select asp-for="Passenger.Nationality" class="form-control" asp-items="ViewBag.NationalityList"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmPassword"></label>
+                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-default">Register</button>
+                </form>
+            </div>
+        </div>
 </div>
-
-@section Scripts {
-	@await Html.PartialAsync("_ValidationScriptsPartial")
-}
+    </div>
+        @section Scripts {
+            @await Html.PartialAsync("_ValidationScriptsPartial")
+        }
