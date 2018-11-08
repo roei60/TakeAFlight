@@ -47,18 +47,18 @@ namespace TakeAFlight
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
-			if (env.IsDevelopment())
-			{
-				app.UseBrowserLink();
-				app.UseDeveloperExceptionPage();
-				app.UseDatabaseErrorPage();
-			}
-			else
-			{
-				app.UseExceptionHandler("/Home/Error");
-			}
+            if (env.IsDevelopment())
+            {
+                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+        }
 
-			app.UseStaticFiles();
+        app.UseStaticFiles();
 
 			app.UseAuthentication();
 
@@ -68,6 +68,16 @@ namespace TakeAFlight
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
-		}
+
+            app.Use(async (ctx, next) =>
+            {
+                await next();
+
+                if (ctx.Response.StatusCode == 404 && !ctx.Response.HasStarted)
+                {
+                    ctx.Response.Redirect("/Error");
+                }
+            }); 
+        }
 	}
 }

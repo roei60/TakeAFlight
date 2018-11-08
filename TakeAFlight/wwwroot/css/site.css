@@ -1,10 +1,29 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-    font-family: cursive,fantasy,Syncopate;
+﻿
+@font-face {
+    font-family: 'Comfortaa';
+    src: url(../fonts/Comfortaa-Regular.ttf);
+    font-style:normal;
+    font-weight:100;
 }
 
-h2 {
+@font-face {
+    font-family: 'Comfortaa';
+    src: url(../fonts/Comfortaa-Bold.ttf);
+    font-style: normal;
+    font-weight: 600;
+}
+html {
+    box-sizing: border-box
+} 
+body {
+    margin: 0;
+}
+
+body, h1, h2, h3, h4, h5, h6 {
+    font-family: Comfortaa, cursive,fantasy,Syncopate;
+    line-height: 1.5em;}
+
+h1, h2 {
     text-shadow: 1px 1px #333;
 }
 
@@ -27,11 +46,6 @@ h2 {
     width: 100%;
 }
 
-/* QR code generator */
-#qrCode {
-    margin: 15px;
-}
-
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */
@@ -40,24 +54,13 @@ h2 {
     }
 }
 
-html {
-    box-sizing: border-box
-}
-
 *, *:before, *:after {
     box-sizing: inherit
 }
 
-body {
-    font-size: 15px;
-    line-height: 1.5;
-    font-family: cursive, fantasy, Syncopate;
-    margin: 0;
-}
-
 .light-grey {
-    color: #6dafdf;
-    background-color: #f1f1f1;
+    color: #000 !important;
+    background-color: #f1f1f1 !important;
 }
 
 .bar:before, .bar:after {
@@ -66,6 +69,32 @@ body {
     clear: both
 }
 
+.bar .bar-item {
+    float: left;
+    border: none;
+    display: block;
+    outline: 0;
+    text-align: center;
+    width: 99%;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.center{
+    display: inline-block;
+    width: auto
+}
+
+.navBar {
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    width: 99%;
+    overflow: hidden;
+    font-size: 1em;
+    white-space: normal;
+    font-family: cursive,fantasy,Syncopate;
+    text-align: left;
+}
 .white, .hover-white:hover {
     color: #000 !important;
     background-color: #fff !important
@@ -87,6 +116,8 @@ body {
     text-align: center;
     cursor: pointer;
     white-space: nowrap;
+    width: 100%;
+    white-space: normal
 }
 
     .button:hover {
@@ -94,30 +125,7 @@ body {
         background-color: #ccc !important
     }
 
-.bar .bar-item {
-    padding: 1em 1.5em;
-    float: left;
-    width: auto;
-    border: none;
-    display: block;
-    outline: 0
-}
 
-.bar-item {
-    text-align: center
-}
-
-.navBar {
-    background-color: #fff;
-    border-bottom: 1px solid #ccc;
-    width: 100%;
-    overflow: hidden;
-    font-size: 1em;
-    white-space: normal;
-    padding: 8px;
-    font-family: cursive,fantasy,Syncopate;
-    text-align: left;
-}
 
 .icon {
     width: 1.3em;
@@ -144,39 +152,13 @@ body {
     color: #fff !important;
     background-color: #ff9800 !important
 }
-
+.text_holder{
+    height:3em;
+}
 .margin-right {
     margin-right: 16px !important
 }
 
-.button:hover {
-    color: #000 !important;
-    background-color: #ccc !important
-}
-
-.bar .button {
-    white-space: normal
-}
-
-.button {
-    width: 100%;
-    text-align: left;
-    padding: 8px 16px
-}
-
-.button {
-    border: none;
-    display: inline-block;
-    padding: 8px 16px;
-    vertical-align: middle;
-    overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-    background-color: inherit;
-    text-align: center;
-    cursor: pointer;
-    white-space: nowrap;
-}
 
 .right {
     float: right !important
@@ -342,10 +324,7 @@ body {
     padding: 12px 24px !important
 }
 
-.center .bar {
-    display: inline-block;
-    width: auto
-}
+
 
 .container, .panel {
     padding: 0.01em 16px;
@@ -411,7 +390,7 @@ body {
         text-align: center
     }
 
-        .w3-dropdown-hover.mobile, .w3-dropdown-hover.mobile .w3-btn, .w3-dropdown-hover.mobile .button, .w3-dropdown-click.mobile, .w3-dropdown-click.mobile .w3-btn, .w3-dropdown-click.mobile .button {
+        .w3-dropdown-hover.mobile, .w3-dropdown-hover.mobile .w3-btn, .w3-dropdown-hover.mobile, .w3-dropdown-click.mobile, .w3-dropdown-click.mobile .w3-btn, .w3-dropdown-click.mobile .button {
             width: 100%
         }
 }
