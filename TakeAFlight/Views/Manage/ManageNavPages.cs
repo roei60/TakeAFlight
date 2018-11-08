@@ -17,10 +17,10 @@ namespace TakeAFlight.Views.Manage
         public static string MyOrders => "MyOrders";
 
         public static string ExternalLogins => "ExternalLogins";
-		public static string viewDestinations => "Destinations";
+		public static string viewDestinations => "ViewDestinations";
 		public static string TwoFactorAuthentication => "TwoFactorAuthentication";
-        public static string viewStatistics => "Statistics";
-        public static string viewStatistics1 => "Statistics1";
+        public static string viewStatistics => "viewStatistics";
+        public static string viewStatistics1 => "viewStatistics1";
         
 
 
