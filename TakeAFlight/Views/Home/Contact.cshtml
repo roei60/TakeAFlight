@@ -2,8 +2,8 @@
     ViewData["Title"] = "Contact";
 }
 
-<div class="container" style="background-image: url('../images/heartPhoto.png'); width:100%; opacity:0.9;">
-    <div class="panel padding-16 card ">
+<div class="container">
+    <div class="panel padding-16 card half ">
         <!-- Contact -->
         <div class="container">
             <h2>Contact</h2>
@@ -21,20 +21,25 @@
             </address>
 
         </div>
-        
+
+        <div class="panel padding-16 card half ">
+            <img src="~/images/heartPhoto.png" style="width:100%" />
+        </div>
 
 
         <!--Canvas-->
         <div class="container ">
-            <canvas id="myCanvas" width="400" height="200">
+            <canvas id="myCanvas" width="400" height="100">
                 Your browser does not support the HTML5 canvas tag.
             </canvas>
         </div>
-        <script>
-            var c = document.getElementById("myCanvas");
-            var ctx = c.getContext("2d");
-            ctx.font = "30px Arial";
-            ctx.strokeText("Let us book your next trip!", 20, 150);
-        </script>
+
     </div>
 </div>
+
+<script>
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.font = "30px Arial";
+    ctx.strokeText("Let us book your next trip!", 20, 150);
+</script>
