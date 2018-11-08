@@ -28,24 +28,19 @@ namespace TakeAFlight.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
-        }
 
-        [Authorize]
+			return RedirectToAction("Error", "Error");
+		}
+
+		[Authorize]
         [HttpPost]
         public IActionResult Index(List<int> data)
         {
-            return View();
-        }
+			return RedirectToAction("Error", "Error");
+		}
 
-        [Authorize]
-        [HttpGet]
-        public IActionResult Show()
-        {
-            return View(null);
-        }
 
-        [Authorize]
+		[Authorize]
         [HttpPost]
         public async Task<IActionResult> Show(List<string> FlightId)
         {
