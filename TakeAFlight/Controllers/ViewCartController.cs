@@ -50,7 +50,9 @@ namespace TakeAFlight.Controllers
         public async Task<IActionResult> Show(List<string> FlightId)
         {
             FlightId.RemoveAt(0);
-            var takeAFlightContext = _context.Flight.Include(f => f.Destination);
+			if(FlightId==null|| FlightId.Count()==0)
+				return RedirectToAction("Error", "Error");
+			var takeAFlightContext = _context.Flight.Include(f => f.Destination);
             var Flights = from flights in takeAFlightContext
                           where FlightId.Contains(flights.FlightID.ToString())
                           select flights;

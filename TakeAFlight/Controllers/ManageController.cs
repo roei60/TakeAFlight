@@ -610,13 +610,13 @@ namespace TakeAFlight.Controllers
 		{
 			if (id == null)
 			{
-				return NotFound();
+				return RedirectToAction("Error", "Error");
 			}
 
 			var destination = await _takeAFlightContext.Destinations.SingleOrDefaultAsync(m => m.DestinationID== id);
 			if (destination== null)
 			{
-				return NotFound();
+				return RedirectToAction("Error", "Error");
 			}
 
 			return View(destination);
@@ -658,13 +658,13 @@ namespace TakeAFlight.Controllers
 		{
 			if (id == null)
 			{
-				return NotFound();
+				return RedirectToAction("Error", "Error");
 			}
 
 			var destination= await _takeAFlightContext.Destinations.SingleOrDefaultAsync(m => m.DestinationID == id);
 			if (destination == null)
 			{
-				return NotFound();
+				return RedirectToAction("Error", "Error");
 			}
 			return View(destination);
 		}
@@ -676,7 +676,7 @@ namespace TakeAFlight.Controllers
 		{
 			if (DestinationID != destination.DestinationID)
 			{
-				return NotFound();
+				return RedirectToAction("Error", "Error");
 			}
 
 			if (ModelState.IsValid)
@@ -690,7 +690,7 @@ namespace TakeAFlight.Controllers
 				{
 					if (!_takeAFlightContext.Destinations.Any(obj=>obj.DestinationID==DestinationID))
 					{
-						return NotFound();
+						return RedirectToAction("Error", "Error");
 					}
 					else
 					{

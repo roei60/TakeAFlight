@@ -93,7 +93,7 @@ namespace TakeAFlight.Controllers
 		{
 			if (id == null)
 			{
-				return NotFound();
+				return RedirectToAction("Error", "Error");
 			}
 
 			var flight = await _context.Flight
@@ -101,7 +101,7 @@ namespace TakeAFlight.Controllers
 				.SingleOrDefaultAsync(m => m.FlightID == id);
 			if (flight == null)
 			{
-				return NotFound();
+				return RedirectToAction("Error", "Error");
 			}
 
 			return View(flight);
@@ -145,13 +145,14 @@ namespace TakeAFlight.Controllers
 		{
 			if (id == null)
 			{
-				return NotFound();
+				return RedirectToAction("Error", "Error");
 			}
 
 			var flight = await _context.Flight.SingleOrDefaultAsync(m => m.FlightID == id);
 			if (flight == null)
 			{
-				return NotFound();
+				//return NotFound();
+				return RedirectToAction("Error", "Error");
 			}
 			//     ViewData["DestinationID"] = new SelectList(_context.Set<Destination>(), "DestinationID", "DestinationID", flight.DestinationID);
 			ViewBag.Items = _context.Destinations.Select(obj => new SelectListItem()
@@ -172,7 +173,7 @@ namespace TakeAFlight.Controllers
 		{
 			if (id != flight.FlightID)
 			{
-				return NotFound();
+				return RedirectToAction("Error", "Error");
 			}
 
 			if (ModelState.IsValid)
@@ -186,7 +187,7 @@ namespace TakeAFlight.Controllers
 				{
 					if (!FlightExists(flight.FlightID))
 					{
-						return NotFound();
+						return RedirectToAction("Error", "Error");
 					}
 					else
 					{
@@ -206,7 +207,7 @@ namespace TakeAFlight.Controllers
 		{
 			if (id == null)
 			{
-				return NotFound();
+				return RedirectToAction("Error", "Error");
 			}
 
 			var flight = await _context.Flight
@@ -214,7 +215,7 @@ namespace TakeAFlight.Controllers
 				.SingleOrDefaultAsync(m => m.FlightID == id);
 			if (flight == null)
 			{
-				return NotFound();
+				return RedirectToAction("Error", "Error");
 			}
 
 			return View(flight);
