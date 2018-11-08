@@ -234,11 +234,13 @@ h1, h2 {
     display: block;
     border: none;
     border-bottom: 1px solid #ccc;
+    border-radius: 25px;
     width: 100%
 }
 
 .border {
-    border: 1px solid #ccc !important
+    border: 1px solid #ccc !important;
+    border-radius: 25px;
 }
 
 .row-padding, .row-padding > .half, .row-padding > .w3-third, .row-padding > .w3-twothird, .row-padding > .w3-threequarter, .row-padding > .w3-quarter, .row-padding > .w3-col {
@@ -288,7 +290,6 @@ h1, h2 {
     left: 0;
     bottom: 0
 }
-
 .w3-display-bottomright {
     position: absolute;
     right: 0;

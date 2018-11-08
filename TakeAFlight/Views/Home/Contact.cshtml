@@ -2,12 +2,11 @@
     ViewData["Title"] = "Contact";
 }
 
-<div class="container ">
+<div class="container" style="background-image: url('../images/heartPhoto.png'); width:100%; opacity:0.9;">
     <div class="panel padding-16 card ">
         <!-- Contact -->
         <div class="container">
             <h2>Contact</h2>
-            <p>Let us book your next trip!</p>
             <address>
                 Colman, Israel<br>
                 Eli Vizel 2, Rishon Le Zion<br />
@@ -22,11 +21,12 @@
             </address>
 
         </div>
+        
 
 
         <!--Canvas-->
         <div class="container ">
-            <canvas id="myCanvas" width="300" height="200">
+            <canvas id="myCanvas" width="400" height="200">
                 Your browser does not support the HTML5 canvas tag.
             </canvas>
         </div>
@@ -34,8 +34,7 @@
             var c = document.getElementById("myCanvas");
             var ctx = c.getContext("2d");
             ctx.font = "30px Arial";
-            ctx.strokeText("Let us book your next trip!", 15, 100);
+            ctx.strokeText("Let us book your next trip!", 20, 150);
         </script>
-
-        </div>
+    </div>
 </div>
