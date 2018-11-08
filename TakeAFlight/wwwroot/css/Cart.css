@@ -58,4 +58,7 @@ ul.dropdown-menu.dropdown-cart {
 	height: auto;
 	max-height: 300px;
 	overflow-x: hidden;
-} 
+}
+.SubmitCartBtn{
+	width:100%;
+}
