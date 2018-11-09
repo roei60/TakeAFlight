@@ -1,10 +1,6 @@
 ﻿
 function takeafight(sample, xline, yline) {
-    //console.log("data");
-    //console.log("haaaaaaaaaaaaaa", sample);
-
-
-
+   
     const svg = d3.select('svg');
     const svgContainer = d3.select('#container');
 
@@ -38,14 +34,6 @@ function takeafight(sample, xline, yline) {
     chart.append('g')
         .call(d3.axisLeft(yScale));
 
-    // vertical grid lines
-    // chart.append('g')
-    //   .attr('class', 'grid')
-    //   .attr('transform', `translate(0, ${height})`)
-    //   .call(makeXLines()
-    //     .tickSize(-height, 0, 0)
-    //     .tickFormat('')
-    //   )
 
     chart.append('g')
         .attr('class', 'grid')
@@ -147,7 +135,7 @@ function takeafight(sample, xline, yline) {
         .attr('x', width / 2 + margin)
         .attr('y', 40)
         .attr('text-anchor', 'middle')
-        .text('Reprots');
+        .text('');
 
     svg.append('text')
         .attr('class', 'source')
