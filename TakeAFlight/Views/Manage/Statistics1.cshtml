@@ -21,7 +21,6 @@
             type: "GET",
             url: "/Home/AvgPriceByYear",
             success: function (result) {
-                //console.log("data", result);
                 takeafight(result, "Month", "Avg Price");
 
             },
@@ -32,7 +31,6 @@
 </script>
 
 <div id='layout'>
-    <!-- <h2>Bar chart example</h2> -->
     <div id='container'>
         <svg />
     </div>
