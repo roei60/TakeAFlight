@@ -570,14 +570,14 @@ namespace TakeAFlight.Controllers
 		[Authorize(Roles = "Admin")]
 		public IActionResult Statistics()
         {
-            ViewData["Message"] = "A Little Bit of Statistics ";
+            ViewData["Message"] = "Number Of Flight Per Month In 2019 ";
 
             return View();
         }
 		[Authorize(Roles = "Admin")]
 		public IActionResult Statistics1()
         {
-            ViewData["Message"] = "A Little Bit of Statistics ";
+            ViewData["Message"] = "Price Avg By Month in 2019";
 
             return View();
         }

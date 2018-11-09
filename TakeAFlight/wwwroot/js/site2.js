@@ -122,7 +122,7 @@ function takeafight(sample, xline, yline) {
         .append('text')
         .attr('class', 'value')
         .attr('x', (a) => xScale(a.key) + xScale.bandwidth() / 2)
-        .attr('y', (a) => yScale(a.value) + 30)
+        .attr('y', (a) => yScale(a.value) + 10)
         .attr('text-anchor', 'middle')
         .text((a) => `${a.value}`);
 
