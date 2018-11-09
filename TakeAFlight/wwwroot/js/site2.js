@@ -20,9 +20,6 @@ function takeafight(sample, xline, yline) {
         .range([height, 0])
         .domain([0, 2000]);
 
-    // vertical grid lines
-    // const makeXLines = () => d3.axisBottom()
-    //   .scale(xScale)
 
     const makeYLines = () => d3.axisLeft()
         .scale(yScale);

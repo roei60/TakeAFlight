@@ -338,7 +338,6 @@ h1, h2 {
     position: absolute;
     top: 50%;
     left: 30%;
-    /* transform: translate(0%,-50%); */
     -ms-transform: translate(-0%,-50%);
 }
 
@@ -396,7 +395,7 @@ h1, h2 {
 }
 
 .about {
-    -webkit-column-count: 3; /* Chrome, Safari, Opera */
-    -moz-column-count: 3; /* Firefox */
+    -webkit-column-count: 3;
+    -moz-column-count: 3; 
     column-count: 3;
 }

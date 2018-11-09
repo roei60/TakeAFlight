@@ -154,7 +154,7 @@ namespace TakeAFlight.Controllers
 				//return NotFound();
 				return RedirectToAction("Error", "Error");
 			}
-			//     ViewData["DestinationID"] = new SelectList(_context.Set<Destination>(), "DestinationID", "DestinationID", flight.DestinationID);
+			
 			ViewBag.Items = _context.Destinations.Select(obj => new SelectListItem()
 			{
 				Text = obj.ToString(),
