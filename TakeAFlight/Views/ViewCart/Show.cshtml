@@ -1,67 +1,65 @@
 ﻿
-@model ReflectionIT.Mvc.Paging.PagingList<TakeAFlight.Models.Flight>
-@using ReflectionIT.Mvc.Paging
-@addTagHelper *, ReflectionIT.Mvc.Paging
+@model List<TakeAFlight.Models.Flight>
 @{
-    ViewData["Title"] = "Show Cart";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Show Cart";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>View Cart</h2>
 
 <form action="/ViewCart/Order" method="post">
-    @if (Model != null)
-    {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Destination)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Departure)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Duration)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Price)
-                    </th>
-                    <th>
-                        Quantity
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    var DestinationDetails = item.Destination.ToString();
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => DestinationDetails)
-                            <input type="hidden" name="dest_details" value="@DestinationDetails" />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Departure)
-                            <input type="hidden" name="departure" value="@item.Departure" />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Duration)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                        <td>
-                            <input type="number" min="0" max="5" name="quantity" value="0" />
-                        </td>
-                        <td>
-                            <input type="hidden" name="flight_id" value="@item.FlightID" />
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+	@if (Model != null)
+	{
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						Destination
+					</th>
+					<th>
+						Departure
+					</th>
+					<th>
+						Duration
+					</th>
+					<th>
+						Price
+					</th>
+					<th>
+						Quantity
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					var DestinationDetails = item.Destination.ToString();
+					<tr>
+						<td>
+							@Html.DisplayFor(modelItem => DestinationDetails)
+							<input type="hidden" name="dest_details" value="@DestinationDetails" />
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Departure)
+							<input type="hidden" name="departure" value="@item.Departure" />
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Duration)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Price)
+						</td>
+						<td>
+							<input type="number" min="0" max="5" name="quantity" value="0" />
+						</td>
+						<td>
+							<input type="hidden" name="flight_id" value="@item.FlightID" />
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
 
-        <input id="order_btn" type="submit" value="Order!" class="btn btn-info" />
-    }
+		<input id="order_btn" type="submit" value="Order!" class="btn btn-info" />
+	}
 </form>

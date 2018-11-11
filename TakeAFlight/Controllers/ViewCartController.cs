@@ -51,10 +51,7 @@ namespace TakeAFlight.Controllers
             var Flights = from flights in takeAFlightContext
                           where FlightId.Contains(flights.FlightID.ToString())
                           select flights;
-            int pageSize = 10;
-            var model = await PagingList.CreateAsync(Flights, pageSize, 1, "FlightID", "FlightID");
-            SetRegisterListData();
-            return View(model);
+            return View(Flights.ToList());
         }
 
         [Authorize]
