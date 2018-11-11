@@ -17,7 +17,7 @@
         <div class="container white padding-16">
             <form asp-controller="Flights" asp-action="Index">
                 <div class="row-padding" style="margin:0 -16px;">
-                    <div class="half margin text_holder">
+                    <div class="half margin input">
                         <label>Travel the world with us  </label>
                         <select asp-for="Destination" asp-items="ViewBag.Items" name="DestId"></select>
                         <span asp-validation-for="Destination"></span>
@@ -25,12 +25,12 @@
                 </div>
                 <div class="half">
                     <label>Departure: </label>
-                    <input type="date" class="text_holder" name="Departure" value="2019-01-08" />
+                    <input type="date" class="input" name="Departure" value="2019-01-08" />
                 </div>
 
                 <div class="half">
                     <label>Price:</label>
-                    <input type="number" class="text_holder" name="price" placeholder="price range" />
+                    <input type="number" class="input" name="price" placeholder="price range" />
                 </div>
 
 
