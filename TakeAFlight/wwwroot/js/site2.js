@@ -1,10 +1,6 @@
 ﻿
 function takeafight(sample, xline, yline) {
-    //console.log("data");
-    //console.log("haaaaaaaaaaaaaa", sample);
-
-
-
+   
     const svg = d3.select('svg');
     const svgContainer = d3.select('#container');
 
@@ -24,9 +20,6 @@ function takeafight(sample, xline, yline) {
         .range([height, 0])
         .domain([0, 2000]);
 
-    // vertical grid lines
-    // const makeXLines = () => d3.axisBottom()
-    //   .scale(xScale)
 
     const makeYLines = () => d3.axisLeft()
         .scale(yScale);
@@ -38,14 +31,6 @@ function takeafight(sample, xline, yline) {
     chart.append('g')
         .call(d3.axisLeft(yScale));
 
-    // vertical grid lines
-    // chart.append('g')
-    //   .attr('class', 'grid')
-    //   .attr('transform', `translate(0, ${height})`)
-    //   .call(makeXLines()
-    //     .tickSize(-height, 0, 0)
-    //     .tickFormat('')
-    //   )
 
     chart.append('g')
         .attr('class', 'grid')
@@ -122,7 +107,7 @@ function takeafight(sample, xline, yline) {
         .append('text')
         .attr('class', 'value')
         .attr('x', (a) => xScale(a.key) + xScale.bandwidth() / 2)
-        .attr('y', (a) => yScale(a.value) + 30)
+        .attr('y', (a) => yScale(a.value) + 10)
         .attr('text-anchor', 'middle')
         .text((a) => `${a.value}`);
 
@@ -147,7 +132,7 @@ function takeafight(sample, xline, yline) {
         .attr('x', width / 2 + margin)
         .attr('y', 40)
         .attr('text-anchor', 'middle')
-        .text('Reprots');
+        .text('');
 
     svg.append('text')
         .attr('class', 'source')

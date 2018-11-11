@@ -47,7 +47,10 @@ if ($(document).ready(function () {
     $("#log_out_btn").on("click", function (e) {
         cart.ClearCart(e);
     });
-    
+
+    $('#DateSearchInput').prop('min', function () {
+        return new Date().toJSON().split('T')[0];
+    });
     LoadCartData();
 
 }));

@@ -567,22 +567,23 @@ namespace TakeAFlight.Controllers
 
             return View(model);
         }
-
-        public IActionResult Statistics()
+		[Authorize(Roles = "Admin")]
+		public IActionResult Statistics()
         {
-            ViewData["Message"] = "A Little Bit of Statistics ";
+            ViewData["Message"] = "Number Of Flight Per Month In 2019 ";
 
             return View();
         }
-        public IActionResult Statistics1()
+		[Authorize(Roles = "Admin")]
+		public IActionResult Statistics1()
         {
-            ViewData["Message"] = "A Little Bit of Statistics ";
+            ViewData["Message"] = "Price Avg By Month in 2019";
 
             return View();
         }
-         #region Destination
+		#region Destination
 
-        [Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> ViewDestinations(string sortExpression = "Country", int page = 1, string filter = "")
 		{
 			var Dest = from dest in _takeAFlightContext.Destinations

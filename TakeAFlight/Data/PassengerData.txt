@@ -1,6 +1,6 @@
 ﻿1,0,1988,Albania
-1,0,1950,French
-0,0,1970,French
+1,0,1950,France
+0,0,1970,France
 1,0,1960,French
 1,0,1988,Spain
 1,0,1988,Spain
@@ -19,15 +19,15 @@
 1,2,2007,Albania
 1,2,2979,Albania
 1,0,1988,Albania
-1,0,1950,French
-0,0,1970,French
-1,0,1960,French
+1,0,1950,France
+0,0,1970,France
+1,0,1960,France
 1,0,1988,Spain
 1,0,1988,Spain
 1,0,1988,Spain
-0,1,1988,French
-1,2,1950,French
-1,2,1930,French
+0,1,1988,France
+1,2,1950,France
+1,2,1930,France
 1,2,1978,Albania
 1,2,1678,Albania
 1,2,1988,Albania
@@ -35,7 +35,7 @@
 1,2,2005,Albania
 1,2,2004,Albania
 1,2,2006,Albania
-1,2,2500,French
+1,2,2500,France
 1,2,2007,Albania
 1,2,2979,Albania
 0,3,1988,Albania
@@ -45,7 +45,7 @@
 0,3,1988,Albania
 1,2,2004,Albania
 1,2,2006,Albania
-1,2,2500,French
+1,2,2500,France
 1,2,2007,Albania
 1,2,2979,Albania
 0,3,1988,Albania
@@ -55,7 +55,7 @@
 0,3,1988,Albania
 1,2,2004,Albania
 1,2,2006,Albania
-1,2,2500,French
+1,2,2500,France
 1,2,2007,Albania
 1,2,2979,Albania
 0,3,1988,Albania
@@ -65,7 +65,7 @@
 0,3,1988,Albania
 1,2,2004,Albania
 1,2,2006,Albania
-1,2,2500,French
+1,2,2500,France
 1,2,2007,Albania
 1,2,2979,Albania
 0,3,1988,Albania
@@ -75,7 +75,7 @@
 0,3,1988,Albania
 1,2,2004,Albania
 1,2,2006,Albania
-1,2,2006,French
+1,2,2006,France
 1,2,2007,Albania
 1,2,2979,Albania
 0,3,1988,Albania
@@ -85,7 +85,7 @@
 0,3,1988,Albania
 1,2,2004,Albania
 1,2,2006,Albania
-1,2,2500,French
+1,2,2500,France
 1,2,2007,Albania
 1,2,2979,Albania
 0,3,1988,Albania
@@ -184,3 +184,7 @@
 1,0,1988,Spain
 1,0,1988,Spain
 1,0,1988,Spain
+1,2,1950,France
+1,2,1930,France
+1,2,1950,France
+1,2,1930,France

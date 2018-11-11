@@ -1,7 +1,6 @@
 ﻿
 
 @{
-	ViewData["Title"] = "Statistics";
 	ViewData.AddActivePage(ManageNavPages.viewStatistics);
 
 }
@@ -24,7 +23,7 @@
                 url: "/Home/CountFlightsByYear",
                 success: function (result) {
                     //console.log("data", result);
-                    takeafight(result, "Month", "Avg Price");
+                    takeafight(result, "Month", "Number Of Flights");
 
                 },
                 error: function (response) {

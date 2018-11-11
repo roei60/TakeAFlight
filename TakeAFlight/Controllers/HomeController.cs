@@ -58,7 +58,7 @@ namespace TakeAFlight.Controllers
         [HttpGet]
         public JsonResult CountFlightsByYear(int Year = 2019)
         {
-            //  var flights = dbContext.Flight.Include(obj => obj.Destination);
+           
             var qr = from selection in dbContext.Flight
                      where selection.Departure.Value.Year == Year
                      group selection by selection.Departure.Value.Month into grp
@@ -72,19 +72,12 @@ namespace TakeAFlight.Controllers
         [HttpGet]
         public JsonResult AvgPriceByYear(int year=2019)
         {
-            //  var flights = dbContext.Flight.Include(obj => obj.Destination);
+          
             var qr = from selection in dbContext.Flight
                      where selection.Departure.Value.Year == year
                      group selection by selection.Departure.Value.Month into grp
-                     //     group selection by selection.Departure.Value.Month into grp
                      select new { key = grp.Key, value = Math.Round(grp.Average(obj => obj.Price)) };
 
-
-
-          //  foreach (var item in qr.ToList())
-            //{
-
-           // }
 
 
             return Json(qr.ToList());
