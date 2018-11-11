@@ -5,9 +5,11 @@
 	ViewData["Title"] = "Index";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h4>Attention,the data shown in the cart could be changed, only data at purchase time is definite!</h4>
+
 <div class="container ">
 	<div class="panel padding-16 card ">
-		<h2>Index</h2>
+		<h2>Flights</h2>
 		@if (ViewBag.Prediction != null)
 		{
 			<a asp-action="Index" asp-route-DestId="@ViewBag.Prediction.DestinationID">You might also want to check: @ViewBag.Prediction.Country </a>
